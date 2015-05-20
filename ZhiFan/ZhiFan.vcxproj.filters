@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{79d71a00-efd3-41b3-848f-00b8ab06f10a}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{ceed49b9-a555-42aa-98d3-dd29d135fcc7}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="code">
+      <UniqueIdentifier>{f5f5025a-e051-4b0b-91df-d380ca6ad818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{6c2a4734-0537-4cb7-b98f-98e0607a55b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{13001c6f-8652-4682-8462-5eac0ad8562f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packets">
+      <UniqueIdentifier>{2f3dfc14-68ad-4cb0-96f4-de56b8999264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{feaaffd4-8502-4927-b581-03a913d0a5a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="code\AbstractParseJson.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AbstractParseJson.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AbstractParseJson.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="code\main.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Packet.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Packet.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Packet.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="code\SettingHelper.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\SettingInfo.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SettingInfo.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SettingInfo.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="code\stdafx.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBModule.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\MSSQLConnectionHelper.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Transaction.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Transaction.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\InstantiationPacketHelper.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\NetLogicMainProcess.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_NetLogicMainProcess.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_NetLogicMainProcess.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\NetServerControl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_NetServerControl.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_NetServerControl.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\Transaction.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServerBackPacket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServerBackPacket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_UserLoginPacket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_UserLoginPacket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TestPacket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TestPacket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="code\AbstractParseJson.h">
+      <Filter>code</Filter>
+    </CustomBuild>
+    <CustomBuild Include="code\Packet.h">
+      <Filter>code</Filter>
+    </CustomBuild>
+    <CustomBuild Include="code\SettingInfo.h">
+      <Filter>code</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\Transaction.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\NetLogicMainProcess.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\NetServerControl.h">
+      <Filter>network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\ServerBackPacket.h">
+      <Filter>packets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\UserLoginPacket.h">
+      <Filter>packets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="test\TestPacket.h">
+      <Filter>test</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\defs.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\NetCommunicationProtocol.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\SettingHelper.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\stdafx.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBModule.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\MSSQLConnectionHelper.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="network\InstantiationPacketHelper.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\packets.h">
+      <Filter>network</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
