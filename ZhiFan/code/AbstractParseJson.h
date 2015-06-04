@@ -20,7 +20,7 @@ public:
 	AbstractParseJson(QObject *parent = 0);
 	virtual ~AbstractParseJson();
 	//将QObject转换成QVariant。
-	void qobject2qvariant(QVariantMap &variant);
+	void qobject2qvariant(QVariantMap &variant)const;
 
 	//将QVariant存储到QObject类中的数据成员中去。
 	void qvariant2qobject(const QVariantMap &variant);
@@ -35,7 +35,7 @@ public:
 	void write(const QVariantMap &val);
 
 	//读取数据成员，序列化为json数据
-	QVariantMap read();
+	QVariantMap read()const;
 };
 
 #endif // ABSTRACTPASERJSON_H

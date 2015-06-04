@@ -11,18 +11,24 @@
 				处理服务端与客户端的事务逻辑交互。【implement】
 *********************************************************************/
 #include <QObject>
+#include <QMap>
+#include "FunctionHashTable.h"
+using namespace net;
 class Packet;
-class QMutex;
 class QTcpSocket;
 class NetLogicMainProcess;
+class Error;
+class Transaction;
+
+typedef void(Transaction::*FunctionType)(void);
 class Transaction : public QObject
 {
 	Q_OBJECT
 
 public:
-	Transaction(NetLogicMainProcess *parent);
+	Transaction(QObject *parent);
 	~Transaction();
-
+	FunctionHashTable<NetCommunicationProtocol, FunctionType>& getTransactionMap();
 	//************************************
 	// Method:    lock
 	// FullName:  Transaction::lock
@@ -32,7 +38,7 @@ public:
 	// Parameter: Packet * pct 为下一个事务准备请求包内容
 	// Parameter: QTcpSocket * sock 来自sock，请求了服务。
 	//************************************
-	void lock(Packet *pct, QTcpSocket *sock);
+	void lock(Packet *pct, QTcpSocket *sock, Error *e);
 
 	//************************************
 	// Method:    unlock
@@ -47,15 +53,15 @@ public:
 	// Method:    userLogin
 	// FullName:  Transaction::userLogin
 	// Access:    public 
-	// Returns:   bool 总是返回true
+	// Returns:   void
 	// Qualifier: 用户登陆逻辑处理
 	//************************************
-	bool userLogin();
+	void userLogin();
 private:
 	Packet *preparePacket;		//临时包
 	QTcpSocket *remoteSocket;	//临时远程socket套接字
-	const NetLogicMainProcess *netLogicMainProcess;
-	QMutex *prepareMutex;
+	Error *err;
+	static FunctionHashTable<NetCommunicationProtocol, FunctionType> transactionMap;
 };
 
 #endif // TRANSACTION_H

@@ -5,10 +5,12 @@
 #include "Transaction.h"
 #include "NetServerControl.h"
 #include "InstantiationPacketHelper.h"
+#include "Error.h"
+#include "ServerBackPacket.h"
 #include <QTcpSocket>
-NetLogicMainProcess::NetLogicMainProcess(QObject *parent)
+NetLogicMainProcess::NetLogicMainProcess(NetServerControl *parent)
 	: QThread(parent)
-	, m_socket(new NetServerControl(this))
+	, m_socket(parent)
 	, active(false)
 	, permit(false)
 	, transactionObject(new Transaction(this))
@@ -77,26 +79,42 @@ void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
 	int protocol = Packet::Protocol(data);
 	auto pck = net::get(protocol);
 	pck->write(data);
+
 	//事务开始
-	transactionObject->lock(pck, sock);
-	switch (protocol)
-	{
-	case Empty:
-		//TODO:....
-		break;
-	default:
-		break;
+	Error err;
+	err.setProtocol(protocol);
+	transactionObject->lock(pck, sock, &err);
+	try{
+		(transactionObject->*transactionObject->getTransactionMap()[(NetCommunicationProtocol)protocol])();
+	}
+	catch (...){
+		qDebug() << "事务出现错误！协议号：" << protocol << "协议语言：" << net::ProtocolToString(protocol);
 	}
 	//事务结束
 	transactionObject->unlock();
+	//处理Error
+	this->sendMsgDependsOnError(&err, sock);
 }
 
-void NetLogicMainProcess::write(Packet *pck, QTcpSocket *sock)const
+void NetLogicMainProcess::write(const Packet *pck, QTcpSocket *sock) const
 {
 	auto raw = pck->read();
 	QJsonDocument jsonDocument = QJsonDocument::fromVariant(raw);
 	QByteArray data = jsonDocument.toJson();
 	//向远程socket发送数据
 	sock->write(data);
+}
+
+void NetLogicMainProcess::sendMsgDependsOnError(const Error *err, QTcpSocket *sock)
+{
+	if (*err <= NoError){
+		return;
+	}
+
+	static ServerBackPacket *pck = new ServerBackPacket;
+	pck->setOperator(err->getProtocol());
+	pck->setResult(*err);
+	this->write(pck, sock);
+
 }
 

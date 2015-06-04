@@ -12,9 +12,9 @@ AbstractParseJson::~AbstractParseJson()
 
 }
 
-void AbstractParseJson::qobject2qvariant(QVariantMap &variant)
+void AbstractParseJson::qobject2qvariant(QVariantMap &variant)const
 {
-	const QObject *object = dynamic_cast<QObject *>(this);
+	const QObject *object = dynamic_cast<const QObject *>(this);
 
 	const QMetaObject *metaobject = object->metaObject();
 	int count = metaobject->propertyCount();
@@ -67,7 +67,7 @@ void AbstractParseJson::write(const QVariantMap &val)
 	this->qvariant2qobject(val);
 }
 
-QVariantMap AbstractParseJson::read()
+QVariantMap AbstractParseJson::read()const
 {
 	QVariantMap data;
 	this->qobject2qvariant(data);

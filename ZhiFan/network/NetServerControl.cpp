@@ -24,7 +24,7 @@ void NetServerControl::newConnectionProcess()
 	connect(sock, &QTcpSocket::readyRead, this, &NetServerControl::pendingRecieveData);
 	connect(sock, &QAbstractSocket::disconnected, this, &NetServerControl::onClientSocketDisconnect);
 	
-	connections.push_back(shared_ptr<QTcpSocket>(sock));
+	connections.push_back(sock);
 }
 
 void NetServerControl::doListen()
@@ -58,11 +58,12 @@ void NetServerControl::removeSocket(QTcpSocket *sock)
 {
 	//不可轻易shared_ptr(_Ptr)去构造一个shared_ptr，可能会造成泄漏，
 	//以及多次delete
-	auto ret = std::remove_if(connections.begin(), connections.end(),
-		[=](const shared_ptr<QTcpSocket> &val){return val.get() == sock; });
+	/*auto ret = std::remove_if(connections.begin(), connections.end(),
+		[=](const QTcpSocket *&val){return val == sock; });
 	if (ret != connections.end()){
 		connections.erase(ret);
-	}
+	}*/
+	connections.removeOne(sock);
 }
 
 void NetServerControl::onClientSocketDisconnect()

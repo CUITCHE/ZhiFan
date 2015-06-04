@@ -12,6 +12,7 @@
 				[关于结束本类，建议直接使用delete操作]
 *********************************************************************/
 #include <QThread>
+class Error;
 class Packet;
 class QTcpSocket;
 class Transaction;
@@ -22,7 +23,7 @@ class NetLogicMainProcess : public QThread
 	Q_OBJECT
 
 public:
-	NetLogicMainProcess(QObject *parent = 0);
+	NetLogicMainProcess(NetServerControl *parent = 0);
 
 	//如果处理线程，还未结束，将会等待2s，之后若还未结束就强制结束
 	~NetLogicMainProcess();
@@ -36,13 +37,16 @@ public:
 	//返回网络通信处理模块的活动状态，return true if it is active;
 	bool isActive()const;
 
-	void write(Packet *pck, QTcpSocket *sock)const;
+	void write(const Packet *pck, QTcpSocket *sock)const;
 protected:
 	//重写线程函数
 	void run();
 
 	//处理客户端发来的数据
 	void task(const NetCommunicationModule &NCM);
+
+	//可能会向客户端发送back包
+	void sendMsgDependsOnError(const Error *err, QTcpSocket *sock);
 private:
 	bool active;	//true，run() is runing,;false run() will be ending.
 	bool permit;	//

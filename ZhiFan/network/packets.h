@@ -10,6 +10,5 @@
 	purpose:	包含每个Packet的头文件
 *********************************************************************/
 #include "TestPacket.h"
-#include "UserLoginPacket.h"
 #include "ServerBackPacket.h"
 #endif // packets_H__

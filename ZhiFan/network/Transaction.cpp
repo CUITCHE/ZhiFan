@@ -3,14 +3,16 @@
 #include "DBModule.h"
 #include "packets.h"
 #include "NetLogicMainProcess.h"
-#include <QMutex>
 #include <QTcpSocket>
-Transaction::Transaction(NetLogicMainProcess *parent)
+#define TransMapGenerate(_protocol_) {net::_protocol_, &Transaction::##user##_protocol_}
+FunctionHashTable<NetCommunicationProtocol, FunctionType> Transaction::transactionMap = {
+	TransMapGenerate(Login)
+};
+#undef TransMapGenerate
+Transaction::Transaction(QObject *parent)
 	: QObject(parent->parent())
 	, preparePacket(nullptr)
 	, remoteSocket(nullptr)
-	, prepareMutex(new QMutex)
-	, netLogicMainProcess(parent)
 {
 
 }
@@ -20,47 +22,29 @@ Transaction::~Transaction()
 
 }
 
-void Transaction::lock(Packet *pct, QTcpSocket *sock)
+void Transaction::lock(Packet *pct, QTcpSocket *sock, Error *e)
 {
-	prepareMutex->lock();
+
 	///从代码级别上保证preparePacket的唯一性【debug】
 	Q_ASSERT(preparePacket == nullptr && remoteSocket == nullptr);
 	remoteSocket = sock;
 	preparePacket = pct;
+	err = e;
 }
 
 void Transaction::unlock()
 {
 	preparePacket = nullptr;
 	remoteSocket = nullptr;
-	prepareMutex->unlock();
+	err = nullptr;
 }
 
-bool Transaction::userLogin()
+void Transaction::userLogin()
 {
-	auto pck = dynamic_cast<UserLoginPacket *>(preparePacket);
-	QString mail = pck->getMailAddress();
-	QString pwd = pck->getPassword();
-	auto d = getInstance(DBModule);
-	int result = 0;
-	bool ret = d->userLogin(mail, pwd, result);
-	ServerBackPacket *pck2 = new ServerBackPacket;
-	pck2->setOperator(pck->getProtocol());
-	if (ret == false){
-		pck2->setResult(result);
-		switch (result)
-		{
-		case 1:
-			pck2->setReason("您的帐号尚未激活");
-			break;
-		case 2:
-			pck2->setReason("帐号或密码错误");
-			break;
-		}
-	}
-	else {
-		pck2->setResult(0);
-	}
-	netLogicMainProcess->write(pck2, remoteSocket);
-	return true;
+	
+}
+
+FunctionHashTable<NetCommunicationProtocol, FunctionType>& Transaction::getTransactionMap()
+{
+	return transactionMap;
 }

@@ -54,7 +54,7 @@ public slots:
 	void onClientSocketDisconnect();
 private:
 	QTcpServer *serverSocket;		//监听socket
-	QList<shared_ptr<QTcpSocket>> connections;		//存储所有连接的socket
+	QList<QTcpSocket*> connections;		//存储所有连接的socket
 	QMutex *mutex;									//sharedDataList的互斥锁
 	QList<NetCommunicationModule> sharedDataList;	//客户端发来的数据，存储了是谁发来的QTcpSocket指针
 };
