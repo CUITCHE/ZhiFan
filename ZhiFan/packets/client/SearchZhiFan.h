@@ -17,6 +17,8 @@ codep：int：省code（为0表示null，下同）
 codec：int：市code
 coded：int：区code
 keyword：string：搜索关键字（不包含空格）
+upperLimit：int：闭区间 ]
+lowerLimit：int：开区间 )
 
 */
 PACKET_DEFINITION_BEGIN(SearchZhiFan)
@@ -33,6 +35,10 @@ QT_MOC_MINE_DEFINITION(int, codec, Codec);
 QT_MOC_MINE_DEFINITION(int, coded, Coded);
 //keyword：string：搜索关键字（不包含空格）
 QT_MOC_MINE_DEFINITION(QString, keyword, Keyword);
+//upperLimit：int：闭区间 ]
+QT_MOC_MINE_DEFINITION(int, upperLimit, UpperLimit);
+//lowerLimit：int：开区间 )
+QT_MOC_MINE_DEFINITION(int, lowerLimit, LowerLimit);
 
 
 PACKET_DEFINITION_END

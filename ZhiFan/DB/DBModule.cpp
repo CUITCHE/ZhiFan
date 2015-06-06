@@ -54,3 +54,14 @@ void DBModule::reconnect()
 	}
 	MSSQLConnectionHelper::initConnection(*databaseInfo);
 }
+
+int DBModule::registerUser(const QString &mobile, const QString &password)
+{
+	const QString sql = "exec spregister ?,?,?";
+	int error = -777;
+	auto ret = MSSQLConnectionHelper::execProcedure(sql, mobile, password);
+	if (!ret.next()){
+		error = ret.boundValue(0).toInt();
+	}
+	return error;
+}

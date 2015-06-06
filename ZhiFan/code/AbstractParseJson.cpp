@@ -1,16 +1,43 @@
 #include "stdafx.h"
 #include "AbstractParseJson.h"
+#include "ZhiFanPublishBriefOne.h"
+#include "Range.h"
+#include <QJsonDocument>
+template<class T>
+void ComplexToQVariant(const T &toConvert, QVariant &result){
+	QVariantMap data = toConvert.read();
+	result = data;
+}
+
+template<class T>
+void ComplexListToQVariantList(const QList<T> &toConvert, QList<QVariant> &result){
+	QVariant tmp;
+	for (const T& val : toConvert){
+		ComplexToQVariant(val, tmp);
+		result.push_back(tmp);
+	}
+}
+
+template<class T>
+void QVariantToComplex(const QVariant &toConver, T &object){
+	QVariantMap data = toConver.toMap();
+	object.write(data);
+}
+
+template<class T>
+void QVariantListToComplexList(const QList<QVariant> &toConvert, QList<T> &object){
+	T tmp;
+	for (const auto &val : toConvert){
+		QVariantToComplex(val, tmp);
+		object.push_back(tmp);
+	}
+}
 
 AbstractParseJson::AbstractParseJson(QObject *parent)
-	: QObject(parent)
-{
-
-}
-
-AbstractParseJson::~AbstractParseJson()
-{
-
-}
+	: QObject(parent){}
+AbstractParseJson::AbstractParseJson(const AbstractParseJson&){}
+AbstractParseJson &AbstractParseJson::operator =(const AbstractParseJson &){return *this;}
+AbstractParseJson::~AbstractParseJson(){}
 
 void AbstractParseJson::qobject2qvariant(QVariantMap &variant)const
 {
@@ -22,6 +49,23 @@ void AbstractParseJson::qobject2qvariant(QVariantMap &variant)const
 		QMetaProperty metaProperty = metaobject->property(i);
 		const char *name = metaProperty.name();
 		QVariant value = object->property(name);
+		QVariant::Type type = metaProperty.type();
+		if (!value.canConvert(type)){
+			QString typeName = metaProperty.typeName();
+			if (typeName.compare("QList<ZhiFanPublishBriefOnePacket>") == 0){
+				QList<ZhiFanPublishBriefOnePacket> data = value.value<QList<ZhiFanPublishBriefOnePacket>>();
+				QList<QVariant> tmp;
+				ComplexListToQVariantList(data, tmp);
+				value = tmp;
+			}
+			else if (typeName.compare("Range") == 0){
+				Range data = value.value<Range>();
+				QVariant tmp;
+				ComplexToQVariant(data, tmp);
+				value = tmp;
+			}
+		}
+		//qDebug() << value;
 		variant[QLatin1String(name)] = value;
 	}
 }
@@ -47,6 +91,21 @@ void AbstractParseJson::qvariant2qobject(const QVariantMap &variant)
 		}
 		else if (QString(QLatin1String("QVariant")).compare(QLatin1String(metaProperty.typeName())) == 0){
 			metaProperty.write(object, v);
+		}
+		else{
+			QString typeName = metaProperty.typeName();
+			if (typeName.compare("QList<ZhiFanPublishBriefOnePacket>") == 0){
+				QList<QVariant> data = v.toList();
+				QList<ZhiFanPublishBriefOnePacket> tmp;
+				QVariantListToComplexList(data, tmp);
+				metaProperty.write(object, QVariant::fromValue(tmp));
+			}
+			else if (typeName.compare("Range") == 0){
+				QVariant data = v;
+				Range tmp;
+				QVariantToComplex(data, tmp);
+				metaProperty.write(object,tmp);
+			}
 		}
 		++iter;
 	}

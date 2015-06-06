@@ -28,41 +28,53 @@ public:
 
 	//执行sql语句并返回行的结果集
 	template<typename... Args>
-	static const QSqlQuery execQuery(const QString &execSql, const Args&... args)
+	static const QSqlQuery execQuery(const QString &execSql, Args... args)
 	{
 		QSqlQuery query;
 		query.prepare(execSql);
-		execSql_impl(query, args...);
+		execSql_impl(query, std::forward<Args>(args)...);
 		execQuery(query);
 		return query;
 	}
 
 	//执行sql语句并返回行的数量，即受影响的行数，如：select,update,delete,insert等
 	template<typename... Args>
-	static int execDML(const QString &execSql, const Args&... args)
+	static int execDML(const QString &execSql, Args... args)
 	{
 		QSqlQuery query;
 		query.prepare(execSql);
-		execSql_impl(query, args...);
+		execSql_impl(query, std::forward<Args>(args)...);
 		return execDML(query);
 	}
 
 	//执行sql语句并返回结果集的数量
 	template<typename... Args>
-	inline static int execScalar(const QString &execSql, const Args&... args)
+	inline static int execScalar(const QString &execSql, Args... args)
 	{
 		QSqlQuery query;
 		query.prepare(execSql);
-		execSql_impl(query, args...);
+		execSql_impl(query, std::forward<Args>(args)...);
 		return execScalar(query);
+	}
+
+	//执行存储过程，会自动添加一个return output参数放在第一个位置
+	template<typename... Args>
+	inline	static const QSqlQuery execProcedure(const QString &execSql, Args... args)
+	{
+		QSqlQuery query;
+		query.prepare(execSql);
+		query.addBindValue(0, QSql::Out);
+		execSql_impl(query, std::forward<Args>(args)...);
+		execQuery(query);
+		return query;
 	}
 protected:
 	//[模版] 给sql语句添加参数
 	static void execSql_impl(QSqlQuery &query){}
 	template<typename SqlType, typename... Args>
-	static void execSql_impl(QSqlQuery &query, const SqlType &d, const Args& ...args){
+	static void execSql_impl(QSqlQuery &query, const SqlType &d, Args...args){
 		query.addBindValue(d);
-		execSql_impl(query, args...);
+		execSql_impl(query, std::forward<Args>(args)...);
 	}
 
 	//执行sql语句并返回行的结果集

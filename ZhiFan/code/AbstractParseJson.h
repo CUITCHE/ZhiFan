@@ -10,6 +10,7 @@
 				形成json序列，key为数据成员名字
 *********************************************************************/
 #include "defs.h"
+#include <QVariant>
 #include <QObject>
 #include <QJsonDocument>
 class AbstractParseJson : public QObject
@@ -18,7 +19,10 @@ class AbstractParseJson : public QObject
 
 public:
 	AbstractParseJson(QObject *parent = 0);
+	AbstractParseJson& operator =(const AbstractParseJson &);
+	AbstractParseJson(const AbstractParseJson&);
 	virtual ~AbstractParseJson();
+
 	//将QObject转换成QVariant。
 	void qobject2qvariant(QVariantMap &variant)const;
 

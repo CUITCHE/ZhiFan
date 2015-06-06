@@ -213,6 +213,36 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ResponsePullUserCenter.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishOne.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishOne.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Range.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Range.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseSearchZhiFan.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseSearchZhiFan.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseGetOneZhiFanPublish.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseGetOneZhiFanPublish.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishBriefOne.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishBriefOne.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="code\AbstractParseJson.h">
@@ -279,6 +309,24 @@
       <Filter>packets\server</Filter>
     </CustomBuild>
     <CustomBuild Include="packets\server\ResponsePullUserCenter.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ZhiFanPublishOne.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="code\Range.h">
+      <Filter>code</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseSearchZhiFan.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\client\GetOneZhiFanPublish.h">
+      <Filter>packets\client</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseGetOneZhiFanPublish.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ZhiFanPublishBriefOne.h">
       <Filter>packets\server</Filter>
     </CustomBuild>
   </ItemGroup>

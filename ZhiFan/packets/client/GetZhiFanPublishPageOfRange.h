@@ -7,8 +7,9 @@
  * \author CHE
  * \date 六月 2015
  *
- * 获取知返发布内容
+ * 获取知返发布内容（扼要）：GetZhiFanPublishPageOfRange
  */
+
 
 #include "Packet.h"
 /*

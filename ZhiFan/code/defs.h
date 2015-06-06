@@ -8,6 +8,7 @@
 	
 	purpose:	全局定义
 *********************************************************************/
+#include <mutex>
 #define SETTER(Type,variable, name) void set##name(const Type& val){this->variable = val;}
 #define GETTER(Type,variable,name) const Type& get##name()const{return variable;}
 #define GET_SETTER(Type,variable, name)\
@@ -39,7 +40,9 @@
 	public: static Class* instance();static void deleteInstance();\
 
 #define PREPARE_INSTANCE_DEFINITION(Class) Class* Class::g_instance=nullptr; \
-	void Class::checkInstance(){if (g_instance == nullptr){g_instance = new Class;}}\
+	void Class::checkInstance(){if (g_instance == nullptr){\
+	static std::once_flag flag_##Class;\
+	std::call_once(flag_##Class,[&](){g_instance = new Class;});}}\
 	Class* Class::instance(){ checkInstance(); return g_instance; }\
 	void Class::deleteInstance(){ delete g_instance; g_instance = nullptr; }\
 

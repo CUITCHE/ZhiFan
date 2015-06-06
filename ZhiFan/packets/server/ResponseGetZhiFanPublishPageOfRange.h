@@ -10,14 +10,20 @@
  * For：获取知返发布内容（扼要）：GetZhiFanPublishPageOfRange：ResponseGetZhiFanPublishPageOfRange
  */
 
-#include "Packet.h"
+#include "ZhiFanPublishBriefOne.h"
+#include "Range.h"
 
+Q_DECLARE_METATYPE(QList<ZhiFanPublishBriefOnePacket>);
 PACKET_DEFINITION_BEGIN(ResponseGetZhiFanPublishPageOfRange)
 Q_OBJECT
 PACKET_STRUCTION(ResponseGetZhiFanPublishPageOfRange)
 
-QT_MOC_MINE_DEFINITION(QString, mobile, Mobile);
-QT_MOC_MINE_DEFINITION(QString, password, Password);
+//publishList：list< ZhiFanPublishOne >：小于等于 Range
+QT_MOC_MINE_DEFINITION(QList<ZhiFanPublishBriefOnePacket>, publishList, PublishList);
+//range：Range：范围值
+QT_MOC_MINE_DEFINITION(Range, range, Range);
+//hasNext：bool：还有后续内容
+QT_MOC_MINE_DEFINITION(bool, hasNext, HasNext);
 
 PACKET_DEFINITION_END
 

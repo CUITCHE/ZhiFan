@@ -32,8 +32,10 @@ namespace net{
 		CompleteZhiFan,
 		//赞同或反对知返的一个回答
 		ApplaudZhiFan,
-		//获取知返发布内容
+		//获取知返发布内容（扼要）
 		GetZhiFanPublishPageOfRange,
+		//获取一个知返内容的（详细）
+		GetOneZhiFanPublish,
 		//搜索知返
 		SearchZhiFan,
 		//拉取用户中心推送
@@ -50,7 +52,16 @@ namespace net{
 		//For：获取知返发布内容：GetZhiFanPublishPageOfRange：ResponseGetZhiFanPublishPageOfRange
 		ResponseGetZhiFanPublishPageOfRange,
 		//For：搜索知返：SearchZhiFan：ResponseSearchZhiFan
-		ResponseSearchZhiFan
+		ResponseSearchZhiFan,
+		//For：获取知返的详细内容（详细）：GetOneZhiFanPublish：ResponseGetOneZhiFanPublish
+		ResponseGetOneZhiFanPublish,
+		//知返内容包（扼要）：ZhiFanPublishBriefOne
+		ZhiFanPublishBriefOne,
+		//知返内容包
+		ZhiFanPublishOne,
+
+		//max
+		MAX = ZhiFanPublishOne
 
 	};
 	static const char *ProtocolToString(unsigned int val){
@@ -65,6 +76,7 @@ namespace net{
 			Case(CompleteZhiFan);
 			Case(ApplaudZhiFan);
 			Case(GetZhiFanPublishPageOfRange);
+			Case(GetOneZhiFanPublish);
 			Case(SearchZhiFan);
 			Case(PullUserCenter);
 			Case(ServerBack);
@@ -72,12 +84,13 @@ namespace net{
 			Case(ResponsePullUserCenter);
 			Case(ResponseGetZhiFanPublishPageOfRange);
 			Case(ResponseSearchZhiFan);
+			Case(ZhiFanPublishOne);
 		default:
 			break;
 		}
 		return "Not exists";
 	}
-	const int MAX_PROTOCOL = ServerBack;
+	const int MAX_PROTOCOL = MAX;
 }
 #undef Case
 #endif // NetCommunicationProtocol_H__

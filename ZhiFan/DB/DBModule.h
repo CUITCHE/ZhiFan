@@ -26,7 +26,12 @@ public:
 	//重新连接数据库
 	void reconnect();
 
-	
+	/*
+	注册：Register
+	mobile：string：手机号，客户端作标准检查
+	password：string：密码，MD5
+	*/
+	int registerUser(const QString &mobile, const QString &password);
 private:
 	DBModule(QObject *parent = 0);
 	~DBModule();
