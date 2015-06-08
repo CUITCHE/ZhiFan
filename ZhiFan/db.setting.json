@@ -1,10 +1,9 @@
 ﻿{
-
-    "DBServerName": "127.0.0.1",
-
-    "DBServerPort": "1433",
-
-    "DBDatabaseName": "ZhiFan",
-    "DBUserName": "sa",
-    "DBPassword": "123456"
+"serverIp":"127.0.0.1",
+"serverPort":4896,
+"DBServerName": "127.0.0.1",
+"DBServerPort": 1433,
+"DBDatabaseName": "ZhiFan",
+"DBUserName": "sa",
+"DBPassword": "123456"
 }

@@ -57,13 +57,13 @@ public:
 		return execScalar(query);
 	}
 
-	//执行存储过程，会自动添加一个return output参数放在第一个位置
+	//执行存储过程，会自动添加一个return output参数放在第一个[0]位置
 	template<typename... Args>
 	inline	static const QSqlQuery execProcedure(const QString &execSql, Args... args)
 	{
 		QSqlQuery query;
 		query.prepare(execSql);
-		query.addBindValue(0, QSql::Out);
+		query.addBindValue(-777,QSql::Out);
 		execSql_impl(query, std::forward<Args>(args)...);
 		execQuery(query);
 		return query;

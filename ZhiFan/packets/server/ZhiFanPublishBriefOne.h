@@ -46,7 +46,7 @@ QT_MOC_MINE_DEFINITION(QString, briefDesc, BriefDesc);
 //title：string（64）：标题
 QT_MOC_MINE_DEFINITION(QString, title, Title);
 //lightEyes：bool：是否醒目
-QT_MOC_MINE_DEFINITION(QString, lightEyes, LightEyes);
+QT_MOC_MINE_DEFINITION(bool, lightEyes, LightEyes);
 //topTime：置顶的时间
 QT_MOC_MINE_DEFINITION(QDateTime, topTime, TopTime);
 

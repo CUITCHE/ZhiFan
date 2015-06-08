@@ -1,16 +1,18 @@
 #include "stdafx.h"
-#include <QtWidgets/QApplication>
-#include <QDebug>
+#include "Terminal.h"
 #include "DBModule.h"
-#include "ResponseSearchZhiFan.h"
-#include <ResponseGetZhiFanPublishPageOfRange.h>
+#include <QtWidgets/QApplication>
+
 using namespace std;
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	//初始化数据库
 	auto ins = getInstance(DBModule);
 	ins->initConnect();
-	auto ret = ins->registerUser("12", "1564");
+	//启动知返服务
+	Terminal *object = new Terminal(&a);
+	object->start();
 	return a.exec();
 }

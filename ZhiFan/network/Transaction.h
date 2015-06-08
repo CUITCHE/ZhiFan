@@ -10,10 +10,12 @@
 				调用数据库接口，处理服务端与数据库
 				处理服务端与客户端的事务逻辑交互。【implement】
 *********************************************************************/
+#include "FunctionHashTable.h"
 #include <QObject>
 #include <QMap>
-#include "FunctionHashTable.h"
+#include <unordered_map>
 using namespace net;
+using std::unordered_map;
 class Packet;
 class QTcpSocket;
 class NetLogicMainProcess;
@@ -21,6 +23,7 @@ class Error;
 class Transaction;
 
 typedef void(Transaction::*FunctionType)(void);
+typedef QPair<NetCommunicationProtocol, Packet*> AnyPacket;
 class Transaction : public QObject
 {
 	Q_OBJECT
@@ -28,7 +31,7 @@ class Transaction : public QObject
 public:
 	Transaction(QObject *parent);
 	~Transaction();
-	FunctionHashTable<NetCommunicationProtocol, FunctionType>& getTransactionMap();
+	unordered_map<NetCommunicationProtocol, FunctionType>& getTransactionMap();
 	//************************************
 	// Method:    lock
 	// FullName:  Transaction::lock
@@ -47,7 +50,7 @@ public:
 	// Returns:   void
 	// Qualifier: 解锁事务，可以进行下一个事务
 	//************************************
-	void unlock();
+	AnyPacket* unlockForResponse();
 
 	//************************************
 	// Method:    userLogin
@@ -57,11 +60,106 @@ public:
 	// Qualifier: 用户登陆逻辑处理
 	//************************************
 	void userLogin();
+	
+
+	//************************************
+	// Method:    userRegister
+	// FullName:  Transaction::userRegister
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 用户注册
+	//************************************
+	void userRegister();
+
+	
+	//************************************
+	// Method:    userIdentity
+	// FullName:  Transaction::userIdentity
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 用户实名认证
+	//************************************
+	void userIdentity();
+
+
+	//************************************
+	// Method:    userPublishZhiFan
+	// FullName:  Transaction::userPublishZhiFan
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 用户发布知返
+	//************************************
+	void userPublishZhiFan();
+
+	//************************************
+	// Method:    userResponseZhiFan
+	// FullName:  Transaction::userResponseZhiFan
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 回答一个知返
+	//************************************
+	void userResponseZhiFan();
+
+	//************************************
+	// Method:    userCommentResponse
+	// FullName:  Transaction::userCommentResponse
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 评论一个回答
+	//************************************
+	void userCommentResponse();
+
+
+	//************************************
+	// Method:    userCompleteZhiFan
+	// FullName:  Transaction::userCompleteZhiFan
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 完成知返
+	//************************************
+	void userCompleteZhiFan();
+
+	//************************************
+	// Method:    userApplaudZhiFan
+	// FullName:  Transaction::userApplaudZhiFan
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 赞同或反对知返的一个回答
+	//************************************
+	void userApplaudZhiFan();
+
+	//************************************
+	// Method:    userGetZhiFanPublishPageOfRange
+	// FullName:  Transaction::userGetZhiFanPublishPageOfRange
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 获取知返发布内容（扼要）
+	//************************************
+	void userGetZhiFanPublishPageOfRange();
+
+	//************************************
+	// Method:    userGetOneZhiFanPublish
+	// FullName:  Transaction::userGetOneZhiFanPublish
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:获取知返发布内容（详细）
+	//************************************
+	void userGetOneZhiFanPublish();
+
+	//************************************
+	// Method:    userSearchZhiFan
+	// FullName:  Transaction::userSearchZhiFan
+	// Access:    public 
+	// Returns:   void
+	// Qualifier: 搜索知返
+	//************************************
+	void userSearchZhiFan();
 private:
 	Packet *preparePacket;		//临时包
 	QTcpSocket *remoteSocket;	//临时远程socket套接字
+	AnyPacket waitPacket;		//返回给调用者
 	Error *err;
-	static FunctionHashTable<NetCommunicationProtocol, FunctionType> transactionMap;
+	static unordered_map<NetCommunicationProtocol, FunctionType> transactionMap;
 };
 
 #endif // TRANSACTION_H

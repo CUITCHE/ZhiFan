@@ -36,7 +36,11 @@ void NetServerControl::doListen()
 	if (ret == false){
 		qDebug() << "监听失败";
 		__debugbreak();
+		return;
 	}
+	qDebug() << "服务启动成功！！！！！";
+	qDebug() << "服务IP地址：" << ip;
+	qDebug() << "服务端口：" << port;
 	connect(serverSocket, &QTcpServer::newConnection, this, &NetServerControl::newConnectionProcess);
 }
 

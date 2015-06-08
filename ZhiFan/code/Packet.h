@@ -30,7 +30,8 @@ public:
 #endif // PACKET_STRUCTION
 #define PACKET_STRUCTION(ProrocolName) \
 	public:\
-	ProrocolName##Packet(NetCommunicationProtocol _protocol = net::ProrocolName):Packet(_protocol){}
+	ProrocolName##Packet(NetCommunicationProtocol _protocol = net::ProrocolName):Packet(_protocol){}\
+	~ProrocolName##Packet()override{}
 
 #ifdef PACKET_DEFINITION_BEGIN
 #undef PACKET_DEFINITION_BEGIN

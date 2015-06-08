@@ -1,5 +1,3 @@
-#include "stdafx.h"
-#include "NetCommunicationProtocol.h"
 #include "InstantiationPacketHelper.h"
 #include "packets.h"
 
@@ -17,19 +15,32 @@ InstantiationPacketHelper::~InstantiationPacketHelper()
 
 Packet* InstantiationPacketHelper::getPacketByProtocol(const int protocol)
 {
+#define Case(V) pck = new V##Packet;break;
 	Packet *pck = nullptr;
 	switch (protocol)
 	{
-	case Empty:
-		pck = new Packet;
-		break;
-	case Test:
-		pck = new TestPacket;
-		break;
+		Case(Register);
+		Case(Login);
+		Case(Identity);
+		Case(PublishZhiFan);
+		Case(ResponseZhiFan);
+		Case(CommentResponse);
+		Case(CompleteZhiFan);
+		Case(ApplaudZhiFan);
+		Case(GetZhiFanPublishPageOfRange);
+		Case(GetOneZhiFanPublish);
+		Case(SearchZhiFan);
+		Case(PullUserCenter);
+		Case(ServerBack);
+		Case(ResponseLogin);
+		Case(ResponsePullUserCenter);
+		Case(ResponseGetZhiFanPublishPageOfRange);
+		Case(ResponseSearchZhiFan);
+		Case(ZhiFanPublishOne);
 	default:
-		__debugbreak();
 		break;
 	}
+#undef Case
 	return pck;
 }
 namespace net{

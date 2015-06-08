@@ -132,3 +132,11 @@ QVariantMap AbstractParseJson::read()const
 	this->qobject2qvariant(data);
 	return data;
 }
+
+QByteArray AbstractParseJson::toJson(QJsonDocument::JsonFormat format /*= QJsonDocument::JsonFormat::Indented*/) const
+{
+	auto mapdata = read();
+	QJsonDocument json = QJsonDocument::fromVariant(mapdata);
+	return json.toJson(format);
+}
+

@@ -24,12 +24,6 @@ NetLogicMainProcess::~NetLogicMainProcess()
 		return;
 	}
 	stop();
-	//等待2s
-	bool ret = this->wait(2*1000);
-	if (ret == false){
-		//强制结束
-		this->terminate();
-	}
 }
 
 void NetLogicMainProcess::start()
@@ -41,6 +35,12 @@ void NetLogicMainProcess::start()
 void NetLogicMainProcess::stop()
 {
 	permit = false;
+	//等待2s
+	bool ret = this->wait(2 * 1000);
+	if (ret == false){
+		//强制结束
+		this->terminate();
+	}
 }
 
 bool NetLogicMainProcess::isActive() const
@@ -63,6 +63,7 @@ void NetLogicMainProcess::run()
 		NCM = m_socket->getPendingData();
 		this->task(NCM);
 	}
+	active = false;
 }
 
 void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
@@ -81,7 +82,7 @@ void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
 	pck->write(data);
 
 	//事务开始
-	Error err;
+	static Error err;
 	err.setProtocol(protocol);
 	transactionObject->lock(pck, sock, &err);
 	try{
@@ -89,32 +90,33 @@ void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
 	}
 	catch (...){
 		qDebug() << "事务出现错误！协议号：" << protocol << "协议语言：" << net::ProtocolToString(protocol);
+		return;
 	}
 	//事务结束
-	transactionObject->unlock();
-	//处理Error
+	anyPacket = transactionObject->unlockForResponse();
+
+	//处理Error，发送ServerBackPacket AND 客户端需要的数据
 	this->sendMsgDependsOnError(&err, sock);
 }
 
 void NetLogicMainProcess::write(const Packet *pck, QTcpSocket *sock) const
 {
-	auto raw = pck->read();
-	QJsonDocument jsonDocument = QJsonDocument::fromVariant(raw);
-	QByteArray data = jsonDocument.toJson();
+	auto data = pck->toJson();
 	//向远程socket发送数据
 	sock->write(data);
 }
 
 void NetLogicMainProcess::sendMsgDependsOnError(const Error *err, QTcpSocket *sock)
 {
-	if (*err <= NoError){
-		return;
-	}
-
 	static ServerBackPacket *pck = new ServerBackPacket;
 	pck->setOperator(err->getProtocol());
 	pck->setResult(*err);
 	this->write(pck, sock);
-
+	//向客户端发送所需数据
+	if (anyPacket && anyPacket->first != Empty){
+		this->write(anyPacket->second, sock);
+		delete anyPacket->second;
+		anyPacket = nullptr;
+	}
+	
 }
-

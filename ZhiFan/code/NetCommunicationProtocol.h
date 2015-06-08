@@ -10,7 +10,7 @@
 	purpose:	网络通信协议
 	主要是pakcet包协议的定义
 	*********************************************************************/
-#define Case(V) case V: return #V
+
 namespace net{
 	enum NetCommunicationProtocol :unsigned int{
 		Empty,
@@ -64,11 +64,14 @@ namespace net{
 		MAX = ZhiFanPublishOne
 
 	};
+#define Case(V) case V: return #V
 	static const char *ProtocolToString(unsigned int val){
 		switch (val)
 		{
 			Case(Empty);
 			Case(Test);
+			Case(Register);
+			Case(Login);
 			Case(Identity);
 			Case(PublishZhiFan);
 			Case(ResponseZhiFan);
@@ -90,7 +93,39 @@ namespace net{
 		}
 		return "Not exists";
 	}
+#undef Case
+
+#define Case(V) case V:return V
+	static NetCommunicationProtocol protocol_cast(unsigned int val){
+		switch (val)
+		{
+			Case(Empty);
+			Case(Test);
+			Case(Register);
+			Case(Login);
+			Case(Identity);
+			Case(PublishZhiFan);
+			Case(ResponseZhiFan);
+			Case(CommentResponse);
+			Case(CompleteZhiFan);
+			Case(ApplaudZhiFan);
+			Case(GetZhiFanPublishPageOfRange);
+			Case(GetOneZhiFanPublish);
+			Case(SearchZhiFan);
+			Case(PullUserCenter);
+			Case(ServerBack);
+			Case(ResponseLogin);
+			Case(ResponsePullUserCenter);
+			Case(ResponseGetZhiFanPublishPageOfRange);
+			Case(ResponseSearchZhiFan);
+			Case(ZhiFanPublishOne);
+		default:
+			break;
+		}
+		return Empty;
+	}
+#undef Case
 	const int MAX_PROTOCOL = MAX;
 }
-#undef Case
+
 #endif // NetCommunicationProtocol_H__

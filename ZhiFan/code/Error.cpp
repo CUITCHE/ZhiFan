@@ -1,19 +1,9 @@
 #include "Error.h"
 
 Error::Error()
-	:error(NoError)
+	:error(0)
 {
 
-}
-
-Error::operator Errors() const
-{
-	return error;
-}
-
-void Error::operator=(Errors e)
-{
-	error = e;
 }
 
 void Error::setProtocol(unsigned int p)
@@ -24,4 +14,14 @@ void Error::setProtocol(unsigned int p)
 unsigned int Error::getProtocol() const
 {
 	return operatorProtocol;
+}
+
+Error::operator int() const
+{
+	return error;
+}
+
+void Error::operator=(int val)
+{
+	error = val;
 }

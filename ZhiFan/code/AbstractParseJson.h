@@ -11,7 +11,7 @@
 *********************************************************************/
 #include "defs.h"
 #include <QVariant>
-#include <QObject>
+#include <QDebug>
 #include <QJsonDocument>
 class AbstractParseJson : public QObject
 {
@@ -40,6 +40,11 @@ public:
 
 	//读取数据成员，序列化为json数据
 	QVariantMap read()const;
-};
 
+	QByteArray toJson(QJsonDocument::JsonFormat format = QJsonDocument::JsonFormat::Indented) const;
+};
+inline QDebug operator<<(QDebug debug, const AbstractParseJson *jsonClass)
+{
+	return operator<<(debug, jsonClass->toJson());
+}
 #endif // ABSTRACTPASERJSON_H
