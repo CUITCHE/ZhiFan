@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Error.h"
 
 Error::Error()

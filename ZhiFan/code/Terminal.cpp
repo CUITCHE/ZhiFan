@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Terminal.h"
 #include "NetServerControl.h"
 #include "NetLogicMainProcess.h"

@@ -37,6 +37,19 @@
     <Filter Include="packets\client">
       <UniqueIdentifier>{dec4ad1d-4546-4bdb-b305-285d0d2a81b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="network\httpServer">
+      <UniqueIdentifier>{acb01129-212c-493c-8682-c7ffd922a639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\AbstractParseJson.cpp">
@@ -48,6 +61,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_AbstractParseJson.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="code\Error.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\FunctionHashTable.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
     <ClCompile Include="code\main.cpp">
       <Filter>code</Filter>
     </ClCompile>
@@ -58,6 +77,12 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_Packet.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Range.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Range.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="code\SettingHelper.cpp">
@@ -75,17 +100,14 @@
     <ClCompile Include="code\stdafx.cpp">
       <Filter>code</Filter>
     </ClCompile>
+    <ClCompile Include="code\Terminal.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
     <ClCompile Include="DB\DBModule.cpp">
       <Filter>DB</Filter>
     </ClCompile>
     <ClCompile Include="DB\MSSQLConnectionHelper.cpp">
       <Filter>DB</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Transaction.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Transaction.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="network\NetLogicMainProcess.cpp">
       <Filter>network</Filter>
@@ -108,74 +130,11 @@
     <ClCompile Include="network\Transaction.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_TestPacket.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_Transaction.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_TestPacket.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_Transaction.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="code\Error.cpp">
-      <Filter>code</Filter>
-    </ClCompile>
-    <ClCompile Include="code\FunctionHashTable.cpp">
-      <Filter>code</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ServerBackPacket.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ServerBackPacket.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseGetZhiFanPublishPageOfRange.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ResponseGetZhiFanPublishPageOfRange.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseLogin.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ResponseLogin.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ResponsePullUserCenter.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ResponsePullUserCenter.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishOne.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishOne.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Range.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Range.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseSearchZhiFan.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ResponseSearchZhiFan.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseGetOneZhiFanPublish.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ResponseGetOneZhiFanPublish.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishBriefOne.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishBriefOne.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="code\Terminal.cpp">
-      <Filter>code</Filter>
     </ClCompile>
     <ClCompile Include="network\InstantiationPacketHelper.cpp">
       <Filter>network</Filter>
@@ -252,6 +211,105 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SearchZhiFan.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseGetOneZhiFanPublish.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseGetOneZhiFanPublish.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseGetZhiFanPublishPageOfRange.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseGetZhiFanPublishPageOfRange.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseLogin.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseLogin.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponsePullUserCenter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponsePullUserCenter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ResponseSearchZhiFan.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ResponseSearchZhiFan.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ServerBackPacket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ServerBackPacket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishBriefOne.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishBriefOne.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ZhiFanPublishOne.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ZhiFanPublishOne.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\httpServer\HttpRequestParser.cpp">
+      <Filter>network\httpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_HttpRequestParser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_HttpRequestParser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\httpServer\HttpResponseHelper.cpp">
+      <Filter>network\httpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_HttpResponseHelper.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_HttpResponseHelper.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\httpServer\HttpServer.cpp">
+      <Filter>network\httpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_HttpServer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_HttpServer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\httpServer\HttpWorker.cpp">
+      <Filter>network\httpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_HttpWorker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_HttpWorker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TestPacket.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TestPacket.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="network\httpServer\HttpQueryDataObject.cpp">
+      <Filter>network\httpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_HttpQueryDataObject.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_HttpQueryDataObject.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="code\AbstractParseJson.h">
@@ -260,11 +318,11 @@
     <CustomBuild Include="code\Packet.h">
       <Filter>code</Filter>
     </CustomBuild>
-    <CustomBuild Include="code\SettingInfo.h">
+    <CustomBuild Include="code\Range.h">
       <Filter>code</Filter>
     </CustomBuild>
-    <CustomBuild Include="network\Transaction.h">
-      <Filter>network</Filter>
+    <CustomBuild Include="code\SettingInfo.h">
+      <Filter>code</Filter>
     </CustomBuild>
     <CustomBuild Include="network\NetLogicMainProcess.h">
       <Filter>network</Filter>
@@ -272,37 +330,7 @@
     <CustomBuild Include="network\NetServerControl.h">
       <Filter>network</Filter>
     </CustomBuild>
-    <CustomBuild Include="test\TestPacket.h">
-      <Filter>test</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ServerBackPacket.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ResponseGetZhiFanPublishPageOfRange.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ResponseLogin.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ResponsePullUserCenter.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ZhiFanPublishOne.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="code\Range.h">
-      <Filter>code</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ResponseSearchZhiFan.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ResponseGetOneZhiFanPublish.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="packets\server\ZhiFanPublishBriefOne.h">
-      <Filter>packets\server</Filter>
-    </CustomBuild>
-    <CustomBuild Include="network\InstantiationPacketHelper.h">
+    <CustomBuild Include="network\Transaction.h">
       <Filter>network</Filter>
     </CustomBuild>
     <CustomBuild Include="packets\client\ApplaudZhiFan.h">
@@ -341,9 +369,57 @@
     <CustomBuild Include="packets\client\SearchZhiFan.h">
       <Filter>packets\client</Filter>
     </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseGetOneZhiFanPublish.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseGetZhiFanPublishPageOfRange.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseLogin.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponsePullUserCenter.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ResponseSearchZhiFan.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ServerBackPacket.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ZhiFanPublishBriefOne.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="packets\server\ZhiFanPublishOne.h">
+      <Filter>packets\server</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\httpServer\HttpRequestParser.h">
+      <Filter>network\httpServer</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\httpServer\HttpResponseHelper.h">
+      <Filter>network\httpServer</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\httpServer\HttpServer.h">
+      <Filter>network\httpServer</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\httpServer\HttpWorker.h">
+      <Filter>network\httpServer</Filter>
+    </CustomBuild>
+    <CustomBuild Include="test\TestPacket.h">
+      <Filter>test</Filter>
+    </CustomBuild>
+    <CustomBuild Include="network\httpServer\HttpQueryDataObject.h">
+      <Filter>network\httpServer</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\defs.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Error.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\FunctionHashTable.h">
       <Filter>code</Filter>
     </ClInclude>
     <ClInclude Include="code\NetCommunicationProtocol.h">
@@ -355,23 +431,20 @@
     <ClInclude Include="code\stdafx.h">
       <Filter>code</Filter>
     </ClInclude>
+    <ClInclude Include="code\Terminal.h">
+      <Filter>code</Filter>
+    </ClInclude>
     <ClInclude Include="DB\DBModule.h">
       <Filter>DB</Filter>
     </ClInclude>
     <ClInclude Include="DB\MSSQLConnectionHelper.h">
       <Filter>DB</Filter>
     </ClInclude>
-    <ClInclude Include="network\packets.h">
+    <ClInclude Include="network\InstantiationPacketHelper.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="code\Error.h">
-      <Filter>code</Filter>
-    </ClInclude>
-    <ClInclude Include="code\FunctionHashTable.h">
-      <Filter>code</Filter>
-    </ClInclude>
-    <ClInclude Include="code\Terminal.h">
-      <Filter>code</Filter>
+    <ClInclude Include="network\packets.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

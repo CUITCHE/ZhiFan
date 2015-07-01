@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+		<title>knownback</title>			
+		<link href="knownback.css" rel="stylesheet">
+	</head>
+	<body onload="loadTest">
+		
+		<ul class="navbar" id='tabs'>
+			<li><a href="#account-manager" for="account-manager">账号管理</a></li>
+			<li><a href="#info-center" for="info-center">通知中心</a></li>
+			<li><a href="#joined" for="joined">我参与的</a></li>
+			<li><a href="#published" for="published">我发布的</a></li>			
+		</ul>
+		
+		<div id="account-manager" class="presentation">		
+		</div>
+		<div id="info-center" class="presentation">
+		</div>
+		<div id="joined" class="presentation">
+		</div>
+		<div id="published" class="presentation">
+		</div>
+		<script>
+			function loadTest() {
+				asyncGet('account-manager', { userid: "13880087240", token: "12348432dfew4dwe" }, function () { console.log("success") });
+			}
+		</script>
+	</body>
+<script src="knownback.js"></script>
+</html>	

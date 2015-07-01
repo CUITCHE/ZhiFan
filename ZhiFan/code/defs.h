@@ -1,12 +1,12 @@
 #ifndef DEFS_H
 #define DEFS_H
 /********************************************************************
-	created:	2015/02/21
-	created:	21:2:2015   14:11
-	file base:	defs
-	author:		CHE
-	
-	purpose:	全局定义
+created:	2015/02/21
+created:	21:2:2015   14:11
+file base:	defs
+author:		CHE
+
+purpose:	全局定义
 *********************************************************************/
 #include <mutex>
 #define SETTER(Type,variable, name) void set##name(const Type& val){this->variable = val;}
@@ -14,9 +14,11 @@
 #define GET_SETTER(Type,variable, name)\
 	SETTER(Type,variable, name)\
 	GETTER(Type,variable,name)
+
 #define QT_MOC_GET_SETTER(Type, variable, name)\
 	GET_SETTER(Type, variable, name)\
 	Q_PROPERTY(Type variable READ get##name WRITE set##name)\
+
 
 //把定义变量和QT的MOC PROPERTY宏声明结合在一起，
 //呃，我是个大懒鬼-_-...
@@ -41,14 +43,14 @@
 
 #define PREPARE_INSTANCE_DEFINITION(Class) Class* Class::g_instance=nullptr; \
 	void Class::checkInstance(){if (g_instance == nullptr){\
-	static std::once_flag flag_##Class;\
+	std::once_flag flag_##Class;\
 	std::call_once(flag_##Class,[&](){g_instance = new Class;});}}\
 	Class* Class::instance(){ checkInstance(); return g_instance; }\
 	void Class::deleteInstance(){ delete g_instance; g_instance = nullptr; }\
 
 //获取指定类的实例，返回ins指针变量
 template<typename Instance>
-inline Instance* ___get(){return Instance::instance();}
+inline Instance* ___get(){ return Instance::instance(); }
 
 #ifdef getInstance
 #undef getInstance
@@ -73,5 +75,13 @@ inline void ___pop(){ Instance::deleteInstance(); }
 #undef Q_lock
 #endif // Q_lock
 #define Q_lock(mutex) QMutexLocker locker(mutex)
+
+#define __normal_getsetter(Type,variable)\
+	const Type& variable()const{return _##variable;}\
+	Type& variable(){Q_lock(mtx); return _##variable;}
+
+#define ENTITY_MEMBER_DEFINITION(Type, variable)\
+	private:Type _##variable;\
+	public:__normal_getsetter(Type, variable)
 
 #endif // DEFS_H
