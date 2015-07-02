@@ -17,7 +17,7 @@ Q_OBJECT
 PACKET_STRUCTION(ServerBack)
 
 QT_MOC_MINE_DEFINITION(int, Operator, Operator);
-QT_MOC_MINE_DEFINITION(int, result, Result);
+QT_MOC_MINE_DEFINITION(QString, msg, Msg);
 
 PACKET_DEFINITION_END
 

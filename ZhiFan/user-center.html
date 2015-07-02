@@ -4,9 +4,9 @@
 	    <meta charset="UTF-8">
 		<title>knownback</title>			
 		<link href="knownback.css" rel="stylesheet">
+		<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
-	<body onload="loadTest">
-		
+	<body>
 		<ul class="navbar" id='tabs'>
 			<li><a href="#account-manager" for="account-manager">账号管理</a></li>
 			<li><a href="#info-center" for="info-center">通知中心</a></li>
@@ -22,11 +22,6 @@
 		</div>
 		<div id="published" class="presentation">
 		</div>
-		<script>
-			function loadTest() {
-				asyncGet('account-manager', { userid: "13880087240", token: "12348432dfew4dwe" }, function () { console.log("success") });
-			}
-		</script>
 	</body>
-<script src="knownback.js"></script>
+	<script src="knownback.js"></script>
 </html>	

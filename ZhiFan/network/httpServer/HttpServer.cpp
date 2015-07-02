@@ -73,6 +73,12 @@ void HttpServer::onReadyRead()
 		//无效的http请求字符串
 		socket->write("HTTP/1.1 403 Forbidden");
 	}
+	int cnt = 0;
+	while (socket->waitForBytesWritten(20) == false){
+		if (++cnt > 30){
+			break;
+		}
+	}
 	socket->close();
 	socket->deleteLater();
 }

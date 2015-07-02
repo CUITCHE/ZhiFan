@@ -1,28 +1,23 @@
 #include "stdafx.h"
 #include "Error.h"
 
-Error::Error()
-	:error(0)
-{
 
-}
-
-void Error::setProtocol(unsigned int p)
+void Error::operator=(unsigned int errNum)
 {
-	operatorProtocol = p;
-}
-
-unsigned int Error::getProtocol() const
-{
-	return operatorProtocol;
+	this->errNum = errNum;
 }
 
 Error::operator int() const
 {
-	return error;
+	return errNum;
 }
 
-void Error::operator=(int val)
+void Error::operator=(QString val)
 {
-	error = val;
+	errorMsg = val;
+}
+
+Error::operator QString() const
+{
+	return errorMsg;
 }

@@ -12,14 +12,14 @@
 class Error
 {
 public:
-	void operator=(int val);
-	void setProtocol(unsigned int p);
-	unsigned int getProtocol()const;
+	void operator=(QString val);
+	void operator=(unsigned int errNum);
 	operator int()const;
-	Error();
+	operator QString()const;
+	Error(){}
 	~Error(){}
 private:
-	int error;
-	unsigned int operatorProtocol;
+	QString errorMsg;
+	unsigned int errNum;
 };
 #endif // Error_H__

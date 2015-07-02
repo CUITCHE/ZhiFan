@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK
+Date: Fri, 22 May 2009 06:07:21 GMT
+Content-Type:text/html;charset=UTF-8
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body onload="onload()">
+	<div>
+		<p class="test">aaa</p>
+		<img src="./0.jpg" />
+	</div>
+	<script>
+	function onload() {
+		$.ajax({
+			url: '/ajax',
+			type: 'get',
+			success: function (data) {
+				console.log(typeof(data));
+				console.log(data);
+				$('.test').text(data.data);
+			}
+		});
+	}
+	</script>
+
+</body>
+</html>

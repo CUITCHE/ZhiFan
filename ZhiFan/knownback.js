@@ -29,6 +29,7 @@
 					cleanTabsStatus();
 					li.setAttribute('class', 'active');
 					tabDivShow(li);
+					asyncGet('account-manager',{ userid: "13880087240", token: "12348432dfew4dwe" }, function (ds) {console.log(ds);});
 				});
 			}
 			

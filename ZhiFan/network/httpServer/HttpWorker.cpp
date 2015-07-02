@@ -37,7 +37,7 @@ QHash<QString, QString> HttpWorkerPrivate::s_contentTypes = {
 	CONTENT_TYPE("swf", "application/x-shockwave-flash"),
 	CONTENT_TYPE("wav", "audio/x-wav"),
 	CONTENT_TYPE("avi", "video/x-msvideo"),
-	CONTENT_TYPE("json", "application/json")
+	CONTENT_TYPE("json", "application/json;charset=UTF-8")
 };
 #undef CONTENT_TYPE
 HttpWorker::HttpWorker(QObject *parent)
@@ -75,10 +75,10 @@ void HttpWorker::dispatch()
 	using WorkerType = decltype(&HttpWorker::accountMananger);
 
 	static QHash<QString, WorkerType> s_htmlfragment = {
-		{ "account-manager", &HttpWorker::accountMananger }, 
-		{ "info-center", &HttpWorker::noticeCenter },
-		{ "published", &HttpWorker::myPublished },
-		{ "joined", &HttpWorker::myJoined },
+		{ "/account-manager", &HttpWorker::accountMananger }, 
+		{ "/info-center", &HttpWorker::noticeCenter },
+		{ "/published", &HttpWorker::myPublished },
+		{ "/joined", &HttpWorker::myJoined },
 		{ "/user-center.html", &HttpWorker::userCenter}
 	};
 
@@ -111,8 +111,9 @@ void HttpWorker::dispatch()
 	}
 	auto iter = s_htmlfragment.find(path);
 	if (iter != s_htmlfragment.end()){
-		if (iter.value()){
-			(this->*iter.value())();
+		auto func = iter.value();
+		if (func){
+			(this->*func)();
 		}
 	}
 	else{
@@ -147,13 +148,20 @@ void HttpWorker::accountMananger()
 	dataMap.insert("status", true);
 	dataMap.insert("gold", 2048);
 	dataMap.insert("mobile", "133***");
+	dataMap.insert("success", true);
 	auto data = QJsonDocument::fromVariant(dataMap).toJson();
 	d->response->setBody(data);
 }
 
 void HttpWorker::noticeCenter()
 {
-
+	Q_D(HttpWorker);
+	d->response->setHead(200);
+	d->response->setHeader(ContentType, d->s_contentTypes.value("json"));
+	auto ins = getInstance(DBModule);
+	QByteArray out;
+	ins->HttpUserNoticeCenter(1, "", 11, out);
+	d->response->setBody(out);
 }
 
 void HttpWorker::myPublished()

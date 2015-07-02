@@ -36,6 +36,9 @@ class ZhiFanPublishOnePacket;
 
 class QSqlQuery;
 class Range;
+typedef QMap<QString, QVariant> QVariantMap;
+class QByteArray;
+
 class DBModule: QThread
 {
 	PREPARE_INSTANCE_DECLARE(DBModule)
@@ -172,6 +175,34 @@ public:
 	return 0成功，-1用户不存在
 	*/
 	int pullUserCenterUser(const PullUserCenterPacket *packet);
+
+	/*HTTP接口*/
+
+	/**
+	@brief 个人信息
+	@param userid 用户id
+	@param token token信息
+	@return 0成功，-1用户验证错误
+	*/
+	int HttpUserInfo(const int userid, const QString &token, QVariantMap &out);
+
+	/**
+	@brief 申请认证
+	@param userid 用户id
+	@param token token信息
+	@return 0成功，-1用户验证错误
+	*/
+	int HttpUserIdentity(const int userid, const QString &token, const QString &name, const QString &idcard, QVariantMap &out);
+
+	/**
+	@brief 通知中心，每次发送5条消息，会包含所有信息
+	@param userid 用户id
+	@param token token信息
+	@param pageNum 当前第几页消息
+	@return 0成功，-1用户验证错误
+	*/
+	int HttpUserNoticeCenter(const int userid, const QString &token, int pageNum, QByteArray &out);
+
 protected:
 	void briefZhiFanAnalysis(QSqlQuery &query, const Range &range, ResponseGetZhiFanPublishPageOfRangePacket *response_dispatch);
 private:

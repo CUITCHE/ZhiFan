@@ -6,7 +6,11 @@
 #include <QtWidgets/QApplication>
 
 using namespace std;
-
+void test(){
+	auto ins = getInstance(DBModule);
+	QByteArray out;
+	ins->HttpUserNoticeCenter(1, "2", 1, out);
+}
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
@@ -20,7 +24,7 @@ int main(int argc, char *argv[])
 	if (!server->listen(QHostAddress("127.0.0.1"))){
 		qDebug() << "¼àÌýÊ§°Ü£¡";
 	}
-
+	test();
 	/*HttpParser paser;
 	paser.parse("GET /cgi-bin/tmpDraw.cgi?type=pie&color=green HTTP/1.1\n");
 	if (paser.isVaild()){

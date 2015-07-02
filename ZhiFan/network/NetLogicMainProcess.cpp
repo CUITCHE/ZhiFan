@@ -83,7 +83,7 @@ void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
 
 	//事务开始
 	static Error err;
-	err.setProtocol(protocol);
+	
 	transactionObject->lock(pck, sock, &err);
 	try{
 		(transactionObject->*transactionObject->getTransactionMap()[(NetCommunicationProtocol)protocol])();
@@ -108,9 +108,11 @@ void NetLogicMainProcess::write(const Packet *pck, QTcpSocket *sock) const
 
 void NetLogicMainProcess::sendMsgDependsOnError(const Error *err, QTcpSocket *sock)
 {
+	if (*err == 0){
+		return;
+	}
 	static ServerBackPacket *pck = new ServerBackPacket;
-	pck->setOperator(err->getProtocol());
-	pck->setResult(*err);
+	pck->setMsg(*err);
 	this->write(pck, sock);
 	//向客户端发送所需数据
 	if (anyPacket && anyPacket->first != Empty){

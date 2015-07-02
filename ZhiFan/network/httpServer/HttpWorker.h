@@ -102,7 +102,7 @@ private:
 	void write403();
 
 	/*
-	@brief д404 Not Found html
+	@brief д404 Not Found
 	*/
 	void write404();
 
