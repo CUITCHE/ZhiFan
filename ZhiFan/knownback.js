@@ -117,7 +117,7 @@
 		xhr.setRequestHeader('Accept', 'application/json');		
 		xhr.send();
 		xhr.onreadystatechange = function () {
-			func(xhr.responseText);
+			func(JSON.parse(xhr.responseText));
 		};
 		
 		function urlEncoder(obj) {
