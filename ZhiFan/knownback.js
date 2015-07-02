@@ -57,19 +57,32 @@
 		var topics = ['a', 'b', 'd'];
 		document.
 		getElementById('info-center').
-		innerHTML = buildTopicsHtml(topics);
-		
-		
-		function registerInfoCenterLinkClick() {
-			var lis = document.
+		innerHTML = buildInfoDetailHtml(topics);
+		showDetails();
+	}
+	
+	function showDetails(ids) {
+		var topicLinks = document.
 			getElementById('info-center').
 			getElementsByTagName('ul').item(0).
 			getElementsByTagName('li');
-			eachHTMLCollection(lis, function (li) {
-				li.addEventListener	
+		hiddentopicsDetail();
+		
+		eachHTMLCollection(topicLinks, function (topicLink) {
+			topicLink.getElementsByTagName('a').
+			item().addEventListener('click', function () {
+				hiddentopicsDetail();
+				topicLink.nextElementSibling.style['display'] = 'block';
+			});
+		});
+		
+		function hiddentopicsDetail() {
+			eachHTMLCollection(topicLinks, function (topicLink) {
+				topicLink.nextElementSibling.style['display'] = 'none';
 			});
 		}
 	}
+	
 	
 	function publishTopics() {
 		var topics = ['a', 'b'];
@@ -139,6 +152,21 @@
 				+ '<label>手机:</label>'
 				+ info['mobile']
 				+ '</div>';
+	}
+	
+	function buildInfoDetailHtml(topics) {
+		var ulHtml = '<ul class="links">\n';
+		ulHtml += topics.
+			map(function (topic) {
+				return '<li><a href="#">' + topic + '</a></li>\n' + 
+						'<div class="topicDetail">' + topic + '</div>';
+			}).
+			reduce(function (topicsHtml, topicHtml) {
+				return topicsHtml + topicHtml;
+			});
+		ulHtml +='</ul>';
+		
+		return ulHtml;
 	}
 	
 	function buildTopicsHtml(topics) {

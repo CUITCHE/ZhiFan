@@ -52,6 +52,11 @@ ul.links li {
 	margin-bottom: 10px;
 }
 
+.topicDetail {
+	border: 1px solid red;
+	margin-bottom: 15px;
+}
+
 ul.links li a:hover {
 	color: black;
 }
