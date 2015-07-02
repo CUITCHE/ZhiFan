@@ -60,3 +60,11 @@ ul.links li {
 ul.links li a:hover {
 	color: black;
 }
+.button {
+	font-style: 10px;
+	margin: 0 5px 0 5px;
+	padding: 5px 10px 5px 10px;
+	border: 1px solid #337ab7;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+}

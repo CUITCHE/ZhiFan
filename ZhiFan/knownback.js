@@ -15,7 +15,7 @@
 			var lis = document.getElementById('tabs').getElementsByTagName('li');
 				eachHTMLCollection(lis, _tabchange);
 			}
-			
+		
 			function cleanTabsStatus() {
 				var lis = document.getElementById('tabs').getElementsByTagName('li');				
 				eachHTMLCollection(lis, function (li) {
@@ -53,15 +53,62 @@
 			}
 	}
 	
-	function infoCenter() {
-		var topics = ['a', 'b', 'd'];
+	function publishTopics() {
+		var topics = ['a', 'b'];
 		document.
-		getElementById('info-center').
-		innerHTML = buildInfoDetailHtml(topics);
-		showDetails();
+		getElementById('published').
+		innerHTML = buildTopicsHtml(topics);
 	}
 	
-	function showDetails(ids) {
+	function joinTopics() {
+		var topics = ['a', 'b', 'c'];
+		document.
+		getElementById('joined').
+		innerHTML = buildTopicsHtml(topics);
+	}
+	
+	function buildTopicPage(topics, pageNumber) {
+		document.
+		getElementById('joined').
+		innerHTML = buildTopicsHtml(topics);
+	}
+	
+	function infoCenter(pageNumber) {
+		pageNumber = pageNumber || 0;
+		buildInfoPage(['a'], pageNumber);
+	}
+	
+	function buildInfoPage(topics, pageNumber) {
+		document.
+		getElementById('info-center').
+		innerHTML = buildInfoDetailHtml(topics)	+ createPageChangeButton(pageNumber);
+		registerShowDetailLink();
+		RegisterPageChangeButtonClick('info-center', infoCenter);		
+	}
+	
+	function createPageChangeButton(pageNumber) {
+		return '<div class="change-page-button-group">' +
+				'<a class="button" href=' + (parseInt(pageNumber) - 1) +'>上一页</a>' +
+				'<a class="button" href=' + (parseInt(pageNumber) + 1) +'>下一页</a>' +
+				'</div>';
+	}
+	
+	function RegisterPageChangeButtonClick(divId, func) {
+		var changePageButtonsGroup = 
+			document.getElementById(divId).
+			getElementsByClassName('change-page-button-group').item();
+		var changePageButtons = 
+			changePageButtonsGroup.getElementsByTagName('a');
+			
+		eachHTMLCollection(changePageButtons, function (button) {
+			button.addEventListener('click', function (event) {
+				event.preventDefault();
+				infoCenter(button.getAttribute('href'));
+			});
+		});
+	}
+	
+	function registerShowDetailLink(ids) {
 		var topicLinks = document.
 			getElementById('info-center').
 			getElementsByTagName('ul').item(0).
@@ -84,20 +131,7 @@
 	}
 	
 	
-	function publishTopics() {
-		var topics = ['a', 'b'];
-		document.
-		getElementById('published').
-		innerHTML = buildTopicsHtml(topics);
-	}
-	
-	function joinTopics() {
-		var topics = ['a', 'b', 'c'];
-		document.
-		getElementById('joined').
-		innerHTML = buildTopicsHtml(topics);
-	}
-	
+
 	function personalInfo() {
 		var info = {
 			username: 'aa',
@@ -110,25 +144,7 @@
 		innerHTML = buildInfoHtml(info);
 	}
 	
-	function asyncGet(url, params, func) {
-		url += ('?' + urlEncoder(params));
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', url, true);
-		xhr.setRequestHeader('Accept', 'application/json');		
-		xhr.send();
-		xhr.onreadystatechange = function () {
-			func(JSON.parse(xhr.responseText));
-		};
-		
-		function urlEncoder(obj) {
-			return Object.
-			getOwnPropertyNames(obj).
-			filter(function (proName) {return typeof(obj[proName]) !== 'function';}).
-			filter(function (proName) {return proName !== 'length';}).
-			map(function (proName) {return proName + '=' + obj[proName];}).
-			join('&');
-		}
-	}
+
 	
 	
 	function buildInfoHtml(info) {
@@ -181,6 +197,26 @@
 		ulHtml +='</ul>';
 		
 		return ulHtml;
+	}
+	
+	function asyncGet(url, params, func) {
+		url += ('?' + urlEncoder(params));
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.setRequestHeader('Accept', 'application/json');		
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			func(JSON.parse(xhr.responseText));
+	};
+		
+		function urlEncoder(obj) {
+			return Object.
+			getOwnPropertyNames(obj).
+			filter(function (proName) {return typeof(obj[proName]) !== 'function';}).
+			filter(function (proName) {return proName !== 'length';}).
+			map(function (proName) {return proName + '=' + obj[proName];}).
+			join('&');
+		}
 	}
 	
 	function eachHTMLCollection(tags, func) {
