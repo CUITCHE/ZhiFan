@@ -53,24 +53,32 @@
 			}
 	}
 	
-	function publishTopics() {
-		var topics = ['a', 'b'];
+	function publishTopics(pageNumber) {
+		pageNumber = pageNumber || 0;
+		var topics = ['a', 'b', 'c'];
+		console.log('sd');
+		buildPublishTopicPage(topics, pageNumber);
+	}
+	
+	function buildPublishTopicPage(topics, pageNumber) {
 		document.
 		getElementById('published').
-		innerHTML = buildTopicsHtml(topics);
+		innerHTML = buildTopicsHtml(topics) + createPageChangeButton(pageNumber);
+		RegisterPageChangeButtonClick('published', publishTopics);
 	}
 	
-	function joinTopics() {
+	function joinTopics(pageNumber) {
+		pageNumber = pageNumber || 0;
 		var topics = ['a', 'b', 'c'];
-		document.
-		getElementById('joined').
-		innerHTML = buildTopicsHtml(topics);
+		console.log('sd');
+		buildJoinedTopicPage(topics, pageNumber);
 	}
 	
-	function buildTopicPage(topics, pageNumber) {
+	function buildJoinedTopicPage(topics, pageNumber) {
 		document.
 		getElementById('joined').
-		innerHTML = buildTopicsHtml(topics);
+		innerHTML = buildTopicsHtml(topics) + createPageChangeButton(pageNumber);
+		RegisterPageChangeButtonClick('joined', joinTopics);
 	}
 	
 	function infoCenter(pageNumber) {
@@ -103,7 +111,7 @@
 		eachHTMLCollection(changePageButtons, function (button) {
 			button.addEventListener('click', function (event) {
 				event.preventDefault();
-				infoCenter(button.getAttribute('href'));
+				func(button.getAttribute('href'));
 			});
 		});
 	}
