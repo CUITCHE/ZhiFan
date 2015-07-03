@@ -136,8 +136,6 @@
 		}
 	}
 	
-	
-
 	function personalInfo() {
 		asyncGet('account-manager', {} , buildPersonInfo);
 		
@@ -147,9 +145,13 @@
 		document.
 		getElementById('account-manager').
 		innerHTML = buildInfoHtml(info);
-
+		if (!info['status']) {
+			document.getElementById('auth').
+			addEventListener('click', function () {
+				//写在这个地方。。。嗯嗯嗯
+			});
+		}
 	}
-	
 	
 	function buildInfoHtml(info) {
 		return '<div class="form-group">'
@@ -162,7 +164,8 @@
 				+ '</div>'
 				+ '<div class="form-group">' 
 				+ '<label>认证状态:</label>'
-				+ (info['status'] ? "已认证":"未认证")	
+				+ (info['status'] ? "已认证":"未认证")
+				+ (info['status']?"": '<button class="button" id="auth">认证</button>')
 				+ '</div>'
 				+ '<div class="form-group">'
 				+ '<label>积分:</label>'
