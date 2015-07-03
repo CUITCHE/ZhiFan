@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 	if (!server->listen(QHostAddress("127.0.0.1"))){
 		qDebug() << "¼àÌýÊ§°Ü£¡";
 	}
+
 	test();
 	/*HttpParser paser;
 	paser.parse("GET /cgi-bin/tmpDraw.cgi?type=pie&color=green HTTP/1.1\n");

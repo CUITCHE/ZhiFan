@@ -149,6 +149,8 @@
 			document.getElementById('auth').
 			addEventListener('click', function () {
 				//写在这个地方。。。嗯嗯嗯
+				//验证框，class name: VerificationBox
+				VerificationBox.show();
 			});
 		}
 	}

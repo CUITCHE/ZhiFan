@@ -145,7 +145,7 @@ void HttpWorker::accountMananger()
 	QVariantMap dataMap;
 	dataMap.insert("username", "ÎÄÑî");
 	dataMap.insert("gender", true);
-	dataMap.insert("status", true);
+	dataMap.insert("status", false);
 	dataMap.insert("gold", 2048);
 	dataMap.insert("mobile", "133***");
 	dataMap.insert("success", true);
