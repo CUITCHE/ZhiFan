@@ -29,7 +29,6 @@
 					cleanTabsStatus();
 					li.setAttribute('class', 'active');
 					tabDivShow(li);
-					asyncGet('account-manager',{ userid: "13880087240", token: "12348432dfew4dwe" }, function (ds) {console.log(ds);});
 				});
 			}
 			
@@ -56,9 +55,8 @@
 	
 	function publishTopics(pageNumber) {
 		pageNumber = pageNumber || 0;
-		var topics = ['a', 'b', 'c'];
-		console.log('sd');
-		buildPublishTopicPage(topics, pageNumber);
+		asyncGet('published', {}, 
+			buildPublishTopicPage);
 	}
 	
 	function buildPublishTopicPage(topics, pageNumber) {
@@ -69,10 +67,8 @@
 	}
 	
 	function joinTopics(pageNumber) {
-		pageNumber = pageNumber || 0;
-		var topics = ['a', 'b', 'c'];
-		console.log('sd');
-		buildJoinedTopicPage(topics, pageNumber);
+				asyncGet('joined', {}, 
+			buildJoinedTopicPage);
 	}
 	
 	function buildJoinedTopicPage(topics, pageNumber) {
@@ -84,7 +80,9 @@
 	
 	function infoCenter(pageNumber) {
 		pageNumber = pageNumber || 0;
-		buildInfoPage(['a'], pageNumber);
+			
+		asyncGet('info-center', {}, 
+			buildInfoPage);
 	}
 	
 	function buildInfoPage(topics, pageNumber) {
@@ -103,9 +101,8 @@
 	}
 	
 	function RegisterPageChangeButtonClick(divId, func) {
-		var changePageButtonsGroup = 
-			document.getElementById(divId).
-			getElementsByClassName('change-page-button-group').item();
+		var changePageButtonsGroup = document.getElementById(divId).
+			getElementsByClassName('change-page-button-group').item(0);
 		var changePageButtons = 
 			changePageButtonsGroup.getElementsByTagName('a');
 			
@@ -117,7 +114,7 @@
 		});
 	}
 	
-	function registerShowDetailLink(ids) {
+	function registerShowDetailLink() {
 		var topicLinks = document.
 			getElementById('info-center').
 			getElementsByTagName('ul').item(0).
@@ -142,18 +139,16 @@
 	
 
 	function personalInfo() {
-		var info = {
-			username: 'aa',
-			gender: true,
-			status: true,
-			gold: 23,
-			mobile: 2323};
+		asyncGet('account-manager', {} , buildPersonInfo);
+		
+	}
+	
+	function buildPersonInfo(info) {
 		document.
 		getElementById('account-manager').
 		innerHTML = buildInfoHtml(info);
-	}
-	
 
+	}
 	
 	
 	function buildInfoHtml(info) {
@@ -167,7 +162,7 @@
 				+ '</div>'
 				+ '<div class="form-group">' 
 				+ '<label>认证状态:</label>'
-				+ info['status']	
+				+ (info['status'] ? "已认证":"未认证")	
 				+ '</div>'
 				+ '<div class="form-group">'
 				+ '<label>积分:</label>'
@@ -183,8 +178,8 @@
 		var ulHtml = '<ul class="links">\n';
 		ulHtml += topics.
 			map(function (topic) {
-				return '<li><a href="#">' + topic + '</a></li>\n' + 
-						'<div class="topicDetail">' + topic + '</div>';
+				return '<li><a href="#">' + topic.title + '</a></li>\n' + 
+						'<div class="topicDetail">' + topic.context + '</div>';
 			}).
 			reduce(function (topicsHtml, topicHtml) {
 				return topicsHtml + topicHtml;
@@ -198,7 +193,7 @@
 		var ulHtml = '<ul class="links">\n';
 		ulHtml += topics.
 			map(function (topic) {
-				return '<li><a href="#">' + topic + '</a></li>\n';
+				return '<li><a href="#">' + topic.title + '</a></li>\n';
 			}).
 			reduce(function (topicsHtml, topicHtml) {
 				return topicsHtml + topicHtml;
@@ -215,6 +210,7 @@
 		xhr.setRequestHeader('Accept', 'application/json');		
 		xhr.send();
 		xhr.onreadystatechange = function () {
+//			console.log(JSON.parse(xhr.responseText));
 			func(JSON.parse(xhr.responseText));
 	};
 		
