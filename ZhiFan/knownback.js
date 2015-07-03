@@ -55,7 +55,7 @@
 	
 	function publishTopics(pageNumber) {
 		pageNumber = pageNumber || 0;
-		asyncGet('published', {}, 
+		asyncGet('published', {pageNumber: pageNumber}, 
 			buildPublishTopicPage);
 	}
 	
@@ -67,7 +67,7 @@
 	}
 	
 	function joinTopics(pageNumber) {
-				asyncGet('joined', {}, 
+				asyncGet('joined', {pageNumber: pageNumber}, 
 			buildJoinedTopicPage);
 	}
 	
@@ -88,7 +88,7 @@
 	function buildInfoPage(topics, pageNumber) {
 		document.
 		getElementById('info-center').
-		innerHTML = buildInfoDetailHtml(topics)	+ createPageChangeButton(pageNumber);
+		innerHTML = buildInfoDetailHtml(topics)	+ createPageChangeButton(, pageNumber);
 		registerShowDetailLink();
 		RegisterPageChangeButtonClick('info-center', infoCenter);		
 	}
@@ -148,7 +148,6 @@
 		if (!info['status']) {
 			document.getElementById('auth').
 			addEventListener('click', function () {
-				//写在这个地方。。。嗯嗯嗯
 				//验证框，class name: VerificationBox
 				VerificationBox.show();
 			});
@@ -183,7 +182,7 @@
 		var ulHtml = '<ul class="links">\n';
 		ulHtml += topics.
 			map(function (topic) {
-				return '<li><a href="#">' + topic.title + '</a></li>\n' + 
+				return '<li><a href="' +topic.id +'">' + topic.title + '</a></li>\n' + 
 						'<div class="topicDetail">' + topic.context + '</div>';
 			}).
 			reduce(function (topicsHtml, topicHtml) {
@@ -198,7 +197,7 @@
 		var ulHtml = '<ul class="links">\n';
 		ulHtml += topics.
 			map(function (topic) {
-				return '<li><a href="#">' + topic.title + '</a></li>\n';
+				return '<li><a href="'+ topic +'">' + topic.title + '</a></li>\n';
 			}).
 			reduce(function (topicsHtml, topicHtml) {
 				return topicsHtml + topicHtml;
@@ -215,7 +214,7 @@
 		xhr.setRequestHeader('Accept', 'application/json');		
 		xhr.send();
 		xhr.onreadystatechange = function () {
-//			console.log(JSON.parse(xhr.responseText));
+
 			func(JSON.parse(xhr.responseText));
 	};
 		
