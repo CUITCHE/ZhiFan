@@ -353,6 +353,5 @@ int DBModule::HttpUserNoticeCenter(const int userid, const QString &token, int p
 
 	QJsonDocument json(array);
 	out = json.toJson();
-	qDebug() << out;
 	return ret;
 }

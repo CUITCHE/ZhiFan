@@ -15,11 +15,11 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	//初始化数据库
-	/*auto ins = getInstance(DBModule);
+	auto ins = getInstance(DBModule);
 	ins->initConnect();
 	//启动知返服务
 	Terminal *object = new Terminal(&a);
-	object->start();*/
+	
 	HttpServer *server = new HttpServer(&a);
 	if (!server->listen(QHostAddress("127.0.0.1"))){
 		qDebug() << "监听失败！";

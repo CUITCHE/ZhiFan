@@ -17,8 +17,6 @@ class Terminal: public QObject
 public:
 	Terminal(QObject *parent = 0);
 	~Terminal();
-	void start();
-	void stop();
 private:
 	NetServerControl *serverSocket;		//服务socket，负责网络socket的创建
 	NetLogicMainProcess *processThread;	//业务流程处理线程

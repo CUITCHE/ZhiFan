@@ -9,64 +9,20 @@
 #include "ServerBackPacket.h"
 #include <QTcpSocket>
 NetLogicMainProcess::NetLogicMainProcess(NetServerControl *parent)
-	: QThread(parent)
+	: QObject(parent)
 	, m_socket(parent)
 	, active(false)
 	, permit(false)
 	, transactionObject(new Transaction(this))
 {
-	connect(this, &QThread::finished, this, [&](){active = false; });
+	connect(m_socket, &NetServerControl::taskDataNeed, this, &NetLogicMainProcess::task);
 }
 
 NetLogicMainProcess::~NetLogicMainProcess()
 {
-	if (isActive() == false){
-		return;
-	}
-	stop();
 }
 
-void NetLogicMainProcess::start()
-{
-	permit = true;
-	QThread::start();
-}
-
-void NetLogicMainProcess::stop()
-{
-	permit = false;
-	//等待2s
-	bool ret = this->wait(2 * 1000);
-	if (ret == false){
-		//强制结束
-		this->terminate();
-	}
-}
-
-bool NetLogicMainProcess::isActive() const
-{
-	return active == true;
-}
-
-void NetLogicMainProcess::run()
-{
-	active = true;
-	NetCommunicationModule NCM;
-	forever{
-		if (permit == false){
-			break;
-		}
-		if (m_socket->isPendingClientData() == false){
-			__surrenderconsole__
-			continue;
-		}
-		NCM = m_socket->getPendingData();
-		this->task(NCM);
-	}
-	active = false;
-}
-
-void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
+void NetLogicMainProcess::task(NetCommunicationModule &NCM)
 {
 	QTcpSocket *sock = NCM.sock;
 	QJsonParseError error;
@@ -79,11 +35,14 @@ void NetLogicMainProcess::task(const NetCommunicationModule &NCM)
 	QVariantMap data = jsonDocument.toVariant().toMap();
 	int protocol = Packet::Protocol(data);
 	auto pck = net::get(protocol);
+	if (!pck){
+		qDebug() << "非法协议号：" << protocol;
+	}
 	pck->write(data);
 
 	//事务开始
 	static Error err;
-	
+	err.opt() = protocol;
 	transactionObject->lock(pck, sock, &err);
 	try{
 		(transactionObject->*transactionObject->getTransactionMap()[(NetCommunicationProtocol)protocol])();
@@ -108,16 +67,16 @@ void NetLogicMainProcess::write(const Packet *pck, QTcpSocket *sock) const
 
 void NetLogicMainProcess::sendMsgDependsOnError(const Error *err, QTcpSocket *sock)
 {
-	if (*err == 0){
-		return;
-	}
 	static ServerBackPacket *pck = new ServerBackPacket;
 	pck->setMsg(*err);
+	pck->setOperator(err->opt());
+	pck->setStatus(*err);
 	this->write(pck, sock);
 	//向客户端发送所需数据
 	if (anyPacket && anyPacket->first != Empty){
 		this->write(anyPacket->second, sock);
 		delete anyPacket->second;
+		anyPacket->second = 0;
 		anyPacket = nullptr;
 	}
 	

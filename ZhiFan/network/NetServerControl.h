@@ -41,6 +41,8 @@ public:
 
 	//从sharedDataList取出一条数据
 	NetCommunicationModule getPendingData();
+signals:
+	void taskDataNeed(NetCommunicationModule &data);
 protected:
 	void doListen();
 public slots:

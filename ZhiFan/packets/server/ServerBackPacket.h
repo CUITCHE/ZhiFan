@@ -18,6 +18,7 @@ PACKET_STRUCTION(ServerBack)
 
 QT_MOC_MINE_DEFINITION(int, Operator, Operator);
 QT_MOC_MINE_DEFINITION(QString, msg, Msg);
+QT_MOC_MINE_DEFINITION(int, status, Status);
 
 PACKET_DEFINITION_END
 

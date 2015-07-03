@@ -11,21 +11,6 @@ Terminal::Terminal(QObject *parent /*= 0*/)
 
 Terminal::~Terminal()
 {
-	stop();
 	delete processThread;
 	delete serverSocket;
-}
-
-void Terminal::start()
-{
-	if (!processThread->isActive()){
-		processThread->start();
-	}
-}
-
-void Terminal::stop()
-{
-	if (processThread->isActive()){
-		processThread->stop();
-	}
 }

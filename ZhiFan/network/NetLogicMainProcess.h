@@ -12,7 +12,7 @@
 				[关于结束本类，建议直接使用delete操作]
 *********************************************************************/
 #include "NetCommunicationProtocol.h"
-#include <QThread>
+#include <QObject>
 using namespace net;
 class Error;
 class Packet;
@@ -21,32 +21,20 @@ class Transaction;
 class NetServerControl;
 struct NetCommunicationModule;
 typedef QPair<NetCommunicationProtocol, Packet*> AnyPacket;
-class NetLogicMainProcess : public QThread
+class NetLogicMainProcess : public QObject
 {
 	Q_OBJECT
 
 public:
 	NetLogicMainProcess(NetServerControl *parent = 0);
 
-	//如果处理线程，还未结束，将会等待2s，之后若还未结束就强制结束
 	~NetLogicMainProcess();
 
-	//使active=true，然后调用QThread的start
-	void start();
-
-	//将active=false，在上层调用wait函数，等待线程退出。之后可强制退出，调用terminate
-	void stop();
-
-	//返回网络通信处理模块的活动状态，return true if it is active;
-	bool isActive()const;
-
 	void write(const Packet *pck, QTcpSocket *sock)const;
-protected:
-	//重写线程函数
-	void run();
-
+protected slots:
 	//处理客户端发来的数据
-	void task(const NetCommunicationModule &NCM);
+	void task(NetCommunicationModule &NCM);
+protected:
 
 	//可能会向客户端发送ServerBack包
 	void sendMsgDependsOnError(const Error *err, QTcpSocket *sock);

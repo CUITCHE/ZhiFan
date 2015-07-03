@@ -52,21 +52,13 @@ void NetServerControl::pendingRecieveData()
 		__debugbreak();
 		return;
 	}
-	auto data = sock->readAll();
-	//存储数据到sharedDataList，给数据处理类去处理
-	QMutexLocker locker(mutex);
-	sharedDataList.push_back({ sock, data });
+	auto dataRaw = sock->readAll();
+	NetCommunicationModule data{ sock, dataRaw };
+	emit taskDataNeed(data);
 }
 
 void NetServerControl::removeSocket(QTcpSocket *sock)
 {
-	//不可轻易shared_ptr(_Ptr)去构造一个shared_ptr，可能会造成泄漏，
-	//以及多次delete
-	/*auto ret = std::remove_if(connections.begin(), connections.end(),
-		[=](const QTcpSocket *&val){return val == sock; });
-	if (ret != connections.end()){
-		connections.erase(ret);
-	}*/
 	connections.removeOne(sock);
 }
 
@@ -75,7 +67,6 @@ void NetServerControl::onClientSocketDisconnect()
 	QTcpSocket *sock = dynamic_cast<QTcpSocket*>(sender());
 	if (sock == nullptr){
 		qDebug() << "接收错误的tcp socket sender";
-		__debugbreak();
 		return;
 	}
 	this->removeSocket(sock);

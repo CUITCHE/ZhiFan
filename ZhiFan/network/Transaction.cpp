@@ -38,7 +38,7 @@ void Transaction::lock(Packet *pct, QTcpSocket *sock, Error *e)
 	remoteSocket = sock;
 	preparePacket = pct;
 	err = e;
-	
+	waitPacket.second = 0;
 }
 
 AnyPacket* Transaction::unlockForResponse()
@@ -66,10 +66,12 @@ void Transaction::userLogin()
 	if (*err==0){
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "µÇÂ½,³É¹¦!";
+		*err = "µÇÂ½³É¹¦";
 	}
 	else{
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "µÇÂ½,Ê§°Ü!";
+		*err = "µÇÂ½Ê§°Ü";
 	}
 	waitPacket.first = protocol_cast(preparePacket->getProtocol());
 	waitPacket.second = response;
@@ -86,10 +88,12 @@ void Transaction::userRegister()
 	if (*err==0){
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "×¢²á,³É¹¦!";
+		*err = "×¢²á³É¹¦";
 	}
 	else{
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "×¢²á,Ê§°Ü!";
+		*err = "×¢²áÊ§°Ü";
 	}
 	//waitPacket.first = protocol_cast(preparePacket->getProtocol());
 	waitPacket.second = nullptr;
@@ -106,6 +110,7 @@ void Transaction::userIdentity()
 	if (*err==0){
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "ÊµÃûÈÏÖ¤,³É¹¦!";
+
 	}
 	else{
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
