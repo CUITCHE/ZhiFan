@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MSSQLConnectionHelper.h"
-
+int MSSQLConnectionHelper::index = 0;
 QSqlError::ErrorType MSSQLConnectionHelper::initConnection(const SettingInfo &info)
 {
 	QSqlDatabase mssqlDB = QSqlDatabase::addDatabase("QODBC");

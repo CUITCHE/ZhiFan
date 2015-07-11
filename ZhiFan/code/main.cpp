@@ -4,7 +4,7 @@
 #include "HttpServer.h"
 #include "HttpRequestParser.h"
 #include <QtWidgets/QApplication>
-
+#include "packets.h"
 using namespace std;
 void test(){
 	auto ins = getInstance(DBModule);

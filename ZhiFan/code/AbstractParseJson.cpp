@@ -137,6 +137,8 @@ QByteArray AbstractParseJson::toJson(QJsonDocument::JsonFormat format /*= QJsonD
 {
 	auto mapdata = read();
 	QJsonDocument json = QJsonDocument::fromVariant(mapdata);
-	return json.toJson(format);
+	auto data = json.toJson(format);
+	qDebug() << data;
+	return data;
 }
 

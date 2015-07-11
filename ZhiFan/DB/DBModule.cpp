@@ -63,7 +63,7 @@ int DBModule::registerUser(const RegisterPacket *packet)
 	int error = -777;
 	auto ret = MSSQLConnectionHelper::execProcedure(sql, packet->getMobile(), packet->getPassword());
 
-	error = ret.boundValue("ret").toInt();
+	error = ret.boundValue(0).toInt();
 	return error;
 }
 
@@ -72,8 +72,8 @@ int DBModule::loginUser(const LoginPacket *packet, ResponseLoginPacket *&respons
 	const static QString sql = "exec splogin ?,?,?";
 	int error = -777;
 	auto ret = MSSQLConnectionHelper::execProcedure(sql, packet->getMobile(), packet->getPassword());
-	error = ret.boundValue("ret").toInt();
 
+	error = ret.boundValue(0).toInt();
 	if (ret.next()){
 		bool videntity = ret.value("identification").toBool();
 		QString vidcard = ret.value("IDcard").toString();
@@ -84,6 +84,8 @@ int DBModule::loginUser(const LoginPacket *packet, ResponseLoginPacket *&respons
 		response->setIDCardSubstring(vidcard);
 		response->setZfb(vzfb);
 		response->setUserid(vuserid);
+		QString vname = ret.value("name").toString();
+		response->setUsername(vname);
 	}
 	return error;
 }
@@ -94,7 +96,7 @@ int DBModule::identityUser(const IdentityPacket *packet)
 	int error = -777;
 	auto ret = MSSQLConnectionHelper::execProcedure(sql, packet->getId(), packet->getMobile(),
 		packet->getIDCard(), packet->getActname());
-	error = ret.boundValue("ret").toInt();
+	error = ret.boundValue(0).toInt();
 
 	return error;
 }
@@ -109,7 +111,7 @@ int DBModule::publishZhiFanUser(const PublishZhiFanPacket *packet)
 		packet->getPhoto(), packet->getDesc(), packet->getLostType(), packet->getContactPlaceCode(), packet->getLostDate(),
 		packet->getLostPlaceCodep(), packet->getLostPlaceCodec(), packet->getLostPlaceCoded(), packet->getLostPlaceDetail(),
 		packet->getBills());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	return error;
 }
@@ -121,7 +123,7 @@ int DBModule::responseZhiFanUser(const ResponseZhiFanPacket *packet)
 	const static QString sql = "exec spresponsezhifan ?,?,?,?";
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getUserid(), packet->getPublishid(), packet->getContext());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	return error;
 }
@@ -135,7 +137,7 @@ int DBModule::commentResponseUser(const CommentResponsePacket *packet)
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getResponseid(), packet->getUserid(),
 		packet->getReferuser(), packet->getContext());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	return error;
 }
@@ -148,7 +150,7 @@ int DBModule::completeZhiFanUser(const CompleteZhiFanPacket *packet)
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getPublish(), packet->getTargeted(),
 		packet->getType(), packet->getBills());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	return error;
 }
@@ -162,7 +164,7 @@ int DBModule::applaudZhiFanUser(const ApplaudZhiFanPacket *packet)
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getResponseid(), packet->getUserid(),
 		packet->getApplaudoppose());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	return error;
 }
@@ -176,7 +178,7 @@ int DBModule::getZhiFanPublishPageOfRangeUser(const GetZhiFanPublishPageOfRangeP
 
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getUserid(), packet->getUpperLimit(),
 		packet->getLowerLimit());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 
 	if (error != 0){
 		return error;
@@ -191,7 +193,7 @@ int DBModule::getOneZhiFanPublishUser(const GetOneZhiFanPublishPacket *packet, R
 	const static QString sql = "exec sponezhifanpublish ?,?,?";
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, packet->getUserid(), packet->getPublishid());
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 	if (query.next()){
 		QDateTime vpublishDate = query.value("publishdate").toDateTime();
 		int vlostType = query.value("losttype").toInt();
@@ -296,10 +298,10 @@ void DBModule::briefZhiFanAnalysis(QSqlQuery &query, const Range &range, Respons
 
 int DBModule::HttpUserInfo(const int userid, const QString &token, QVariantMap &out)
 {
-	const static QString sql = "exec httpuserinfo ?,?";
+	const static QString sql = "exec httpuserinfo ?,?,?";
 	int error = -777;
 	auto query = MSSQLConnectionHelper::execProcedure(sql, userid, token);
-	error = query.boundValue("ret").toInt();
+	error = query.boundValue(0).toInt();
 	if (query.next()){
 		QString vname = query.value("name").toString();
 		QString vIDcard = query.value("IDcard").toString();
@@ -308,12 +310,12 @@ int DBModule::HttpUserInfo(const int userid, const QString &token, QVariantMap &
 		QString vaccount = query.value("account").toString();
 		out.clear();
 		out.insert("username", vname);
-		out.insert("gender", vIDcard.size() ? vIDcard.at(5) == 1 : 0);
+		out.insert("gender", vIDcard.size() ? vIDcard.at(16).toLatin1()-'0' == 1 : 0);
 		out.insert("status", videntification);
 		out.insert("gold", vzfb);
 		out.insert("mobile", vaccount.left(4) + "***");
 	}
-	return -1;
+	return error;
 }
 
 int DBModule::HttpUserIdentity(const int userid, const QString &token, const QString &name, const QString &idcard, QVariantMap &out)

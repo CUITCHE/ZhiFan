@@ -8,6 +8,7 @@
 #include "Error.h"
 #include "ServerBackPacket.h"
 #include <QTcpSocket>
+#include <thread>
 NetLogicMainProcess::NetLogicMainProcess(NetServerControl *parent)
 	: QObject(parent)
 	, m_socket(parent)
@@ -60,8 +61,10 @@ void NetLogicMainProcess::task(NetCommunicationModule &NCM)
 
 void NetLogicMainProcess::write(const Packet *pck, QTcpSocket *sock) const
 {
-	auto data = pck->toJson();
+	QByteArray data = pck->toJson();
 	//向远程socket发送数据
+	int index = 0;
+
 	sock->write(data);
 }
 

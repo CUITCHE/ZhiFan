@@ -1,3 +1,4 @@
+/* global userdata */
 (function () {
 	init();
 	
@@ -55,7 +56,7 @@
 	
 	function publishTopics(pageNumber) {
 		pageNumber = pageNumber || 0;
-		asyncGet('published', {pageNumber: pageNumber}, 
+		asyncGet('published', {pageNumber: pageNumber,userid:userdata.userAccount(), token:userdata.pwd()}, 
 			buildPublishTopicPage);
 	}
 	
@@ -67,7 +68,7 @@
 	}
 	
 	function joinTopics(pageNumber) {
-				asyncGet('joined', {pageNumber: pageNumber}, 
+				asyncGet('joined', {pageNumber: pageNumber,userid:userdata.userAccount(), token:userdata.pwd()}, 
 			buildJoinedTopicPage);
 	}
 	
@@ -81,14 +82,14 @@
 	function infoCenter(pageNumber) {
 		pageNumber = pageNumber || 0;
 			
-		asyncGet('info-center', {}, 
+		asyncGet('info-center', {userid:userdata.userAccount(), token:userdata.pwd()}, 
 			buildInfoPage);
 	}
 	
 	function buildInfoPage(topics, pageNumber) {
 		document.
 		getElementById('info-center').
-		innerHTML = buildInfoDetailHtml(topics)	+ createPageChangeButton(, pageNumber);
+		innerHTML = buildInfoDetailHtml(topics)	+ createPageChangeButton(pageNumber);
 		registerShowDetailLink();
 		RegisterPageChangeButtonClick('info-center', infoCenter);		
 	}
@@ -137,7 +138,8 @@
 	}
 	
 	function personalInfo() {
-		asyncGet('account-manager', {} , buildPersonInfo);
+		//qt对象 userdata
+		asyncGet('account-manager', {userid:userdata.userAccount(), token:userdata.pwd()} , buildPersonInfo);
 		
 	}
 	

@@ -142,13 +142,14 @@ void HttpWorker::accountMananger()
 	Q_D(HttpWorker);
 	d->response->setHead(200);
 	d->response->setHeader(ContentType, d->s_contentTypes.value("json"));
+	auto params = d->parser->getRefererQueryItems();
 	QVariantMap dataMap;
-	dataMap.insert("username", "ÎÄÑî");
-	dataMap.insert("gender", true);
-	dataMap.insert("status", false);
-	dataMap.insert("gold", 2048);
-	dataMap.insert("mobile", "133***");
-	dataMap.insert("success", true);
+	auto ins = getInstance(DBModule);
+	auto ret = ins->HttpUserInfo(params.value("userid").toInt(), params.value("token"), dataMap);
+	if (ret != 0){
+		this->write404();
+		return;
+	}
 	auto data = QJsonDocument::fromVariant(dataMap).toJson();
 	d->response->setBody(data);
 }
@@ -166,12 +167,12 @@ void HttpWorker::noticeCenter()
 
 void HttpWorker::myPublished()
 {
-
+	noticeCenter();
 }
 
 void HttpWorker::myJoined()
 {
-
+	noticeCenter();
 }
 
 bool HttpWorker::accountVerification(const QString &userid, const QString &token)

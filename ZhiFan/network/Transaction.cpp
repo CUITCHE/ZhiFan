@@ -93,7 +93,7 @@ void Transaction::userRegister()
 	else{
 		qDebug() << remoteSocket->localAddress().toString() << ":" << remoteSocket->localPort() 
 			<< "×¢²á,Ê§°Ü!";
-		*err = "×¢²áÊ§°Ü";
+		*err = "×¢²áÊ§°Ü,ÕÊºÅÒÑ´æÔÚ!";
 	}
 	//waitPacket.first = protocol_cast(preparePacket->getProtocol());
 	waitPacket.second = nullptr;

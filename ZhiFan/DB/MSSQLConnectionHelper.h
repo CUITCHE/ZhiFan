@@ -63,7 +63,8 @@ public:
 	{
 		QSqlQuery query;
 		query.prepare(execSql);
-		query.addBindValue(-777,QSql::Out);
+		index = 0;
+		query.bindValue(0,0,QSql::InOut);
 		execSql_impl(query, std::forward<Args>(args)...);
 		execQuery(query);
 		return query;
@@ -73,7 +74,7 @@ protected:
 	static void execSql_impl(QSqlQuery &query){}
 	template<typename SqlType, typename... Args>
 	static void execSql_impl(QSqlQuery &query, const SqlType &d, Args...args){
-		query.addBindValue(d);
+		query.bindValue(++index, d);
 		execSql_impl(query, std::forward<Args>(args)...);
 	}
 
@@ -89,6 +90,7 @@ protected:
 private:
 	//检测数据是否处于open状态，open返回true
 	static bool checkDB();
+	static int index;
 };
 
 #endif // MSSQLCONNECTIONHELPER_H
